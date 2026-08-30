@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, ThreeEvent } from "@react-three/fiber";
 
 import {
   Center,
@@ -68,7 +68,7 @@ function ArtifactModel() {
         object={scene}
         scale={1}
         rotation={[Math.PI / 9, 0, 0]}
-        onClick={(event) => {
+        onClick={(event: ThreeEvent<MouseEvent>) => {
           event.stopPropagation();
 
           const x = event.point.x.toFixed(3);

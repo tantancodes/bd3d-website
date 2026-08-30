@@ -1,6 +1,23 @@
 import ArtifactExperience from "./components/ArtifactExperience";
+import { createClient } from "@/lib/supabase/server";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+
+  const { data: annotations, error } = await supabase
+    .from("annotations")
+    .select("*")
+    .order("id");
+
+  if (error) {
+  console.error("Error loading annotations:", {
+    message: error.message,
+    details: error.details,
+    hint: error.hint,
+    code: error.code,
+  });
+}
+
   return (
     <main className="min-h-screen bg-[#f4f1ea] text-[#1f1f1f]">
       <nav className="flex items-center justify-between border-b border-black/10 px-10 py-6">
@@ -31,7 +48,7 @@ export default function Home() {
           </h2>
         </div>
 
-        <ArtifactExperience />
+        <ArtifactExperience annotations={annotations ?? []} />
       </section>
     </main>
   );

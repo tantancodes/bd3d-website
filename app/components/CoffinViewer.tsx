@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Canvas, ThreeEvent } from "@react-three/fiber";
-
 import {
   Center,
   Html,
@@ -10,54 +9,12 @@ import {
   useGLTF,
 } from "@react-three/drei";
 
-type Annotation = {
-  id: number;
-  title: string;
-  description: string;
-  translation: string;
-  transliteration: string;
-  position: [number, number, number];
-};
+import type { Annotation } from "./ArtifactExperience";
 
 type CoffinViewerProps = {
+  annotations: Annotation[];
   onSelectAnnotation: (annotation: Annotation) => void;
 };
-
-const annotations: Annotation[] = [
-  {
-    id: 1,
-    title: "Head of the Dog",
-    description:
-      "This annotation marks the head of the dog model.",
-    translation:
-      "Example translation for the head annotation.",
-    transliteration:
-      "Example transliteration",
-    position: [-0.614, 0.445, -0.883],
-  },
-  {
-    id: 2,
-    title: "Body of the Dog",
-    description:
-      "This annotation marks the central body of the dog model.",
-    translation:
-      "Example translation for the body annotation.",
-    transliteration:
-      "Example transliteration",
-    position: [-0.095, 0.651, 0.099],
-  },
-  {
-    id: 3,
-    title: "Tail of the Dog",
-    description:
-      "This annotation marks the tail of the dog model.",
-    translation:
-      "Example translation for the tail annotation.",
-    transliteration:
-      "Example transliteration",
-    position: [0.753, 0.426, 0.482],
-  },
-];
 
 function ArtifactModel() {
   const { scene } = useGLTF("/models/dog.glb");
@@ -75,9 +32,7 @@ function ArtifactModel() {
           const y = event.point.y.toFixed(3);
           const z = event.point.z.toFixed(3);
 
-          console.log(
-            `position={[${x}, ${y}, ${z}]}`
-          );
+          console.log(`position={[${x}, ${y}, ${z}]}`);
         }}
       />
     </Center>
@@ -94,7 +49,7 @@ function AnnotationMarker({
   const [open, setOpen] = useState(false);
 
   return (
-    <group position={annotation.position}>
+    <group position={[annotation.x, annotation.y, annotation.z]}>
       <mesh
         onClick={(event) => {
           event.stopPropagation();
@@ -142,7 +97,8 @@ function AnnotationMarker({
               </p>
 
               <p className="mt-1 text-sm">
-                {annotation.translation}
+                {annotation.translation ??
+                  "No translation available."}
               </p>
             </div>
 
@@ -163,6 +119,7 @@ function AnnotationMarker({
 }
 
 export default function CoffinViewer({
+  annotations,
   onSelectAnnotation,
 }: CoffinViewerProps) {
   return (

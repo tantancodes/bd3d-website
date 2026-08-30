@@ -3,33 +3,42 @@
 import { useState } from "react";
 import CoffinViewer from "./CoffinViewer";
 
-type Annotation = {
+export type Annotation = {
   id: number;
   title: string;
   description: string;
-  translation: string;
-  transliteration: string;
+  translation: string | null;
+  transliteration: string | null;
+  source: string | null;
+  x: number;
+  y: number;
+  z: number;
 };
 
-export default function ArtifactExperience() {
+type ArtifactExperienceProps = {
+  annotations: Annotation[];
+};
+
+export default function ArtifactExperience({
+  annotations,
+}: ArtifactExperienceProps) {
   const [selectedAnnotation, setSelectedAnnotation] =
     useState<Annotation | null>(null);
 
   return (
     <div className="grid h-[650px] grid-cols-[2fr_1fr] overflow-hidden rounded-2xl border border-black/10 bg-white shadow-sm">
-
-      {/* 3D VIEWER */}
       <div className="relative bg-[#e9e3d8]">
-        <CoffinViewer onSelectAnnotation={setSelectedAnnotation} />
+        <CoffinViewer
+          annotations={annotations}
+          onSelectAnnotation={setSelectedAnnotation}
+        />
 
         <div className="absolute bottom-6 left-6 rounded-full bg-white/90 px-4 py-2 text-xs shadow">
           Drag to rotate · Scroll to zoom
         </div>
       </div>
 
-      {/* ANNOTATION PANEL */}
       <aside className="border-l border-black/10 p-10">
-
         <p className="mb-3 text-xs uppercase tracking-[0.2em] text-black/40">
           Annotation
         </p>
@@ -50,7 +59,8 @@ export default function ArtifactExperience() {
               </p>
 
               <p className="leading-7">
-                {selectedAnnotation.translation}
+                {selectedAnnotation.translation ??
+                  "No translation available."}
               </p>
             </div>
 
@@ -60,7 +70,8 @@ export default function ArtifactExperience() {
               </p>
 
               <p className="italic text-black/70">
-                {selectedAnnotation.transliteration}
+                {selectedAnnotation.transliteration ??
+                  "No transliteration available."}
               </p>
             </div>
           </>
@@ -76,7 +87,6 @@ export default function ArtifactExperience() {
             </p>
           </>
         )}
-
       </aside>
     </div>
   );

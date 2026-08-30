@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Canvas, ThreeEvent } from "@react-three/fiber";
 import {
   Center,
@@ -13,6 +12,7 @@ import type { Annotation } from "./ArtifactExperience";
 
 type CoffinViewerProps = {
   annotations: Annotation[];
+  selectedAnnotationId: number | null;
   onSelectAnnotation: (annotation: Annotation) => void;
 };
 
@@ -41,103 +41,92 @@ function ArtifactModel() {
 
 function AnnotationMarker({
   annotation,
+  index,
+  selected,
   onSelect,
 }: {
   annotation: Annotation;
+  index: number;
+  selected: boolean;
   onSelect: (annotation: Annotation) => void;
 }) {
-  const [open, setOpen] = useState(false);
-
   return (
     <group position={[annotation.x, annotation.y, annotation.z]}>
       <mesh
+        scale={selected ? 1.2 : 1}
         onClick={(event) => {
           event.stopPropagation();
-
-          setOpen(!open);
           onSelect(annotation);
         }}
       >
-        <sphereGeometry args={[0.12, 32, 32]} />
+        <sphereGeometry args={[0.075, 32, 32]} />
 
         <meshStandardMaterial
-          color="#c2410c"
-          emissive="#7c2d12"
-          emissiveIntensity={0.5}
+          color={selected ? "#171717" : "#ffffff"}
+          emissive={selected ? "#171717" : "#ffffff"}
+          emissiveIntensity={selected ? 0.25 : 0.1}
+          roughness={0.4}
         />
       </mesh>
 
-      {open && (
-        <Html
-          position={[0, 0.3, 0]}
-          center
-          distanceFactor={6}
+      <Html
+        position={[0, 0.15, 0]}
+        center
+        distanceFactor={6}
+        pointerEvents="none"
+      >
+        <div
+          className={[
+            "flex size-6 items-center justify-center rounded-full border text-[10px] font-medium shadow-sm transition-all",
+            selected
+              ? "border-neutral-900 bg-neutral-900 text-white"
+              : "border-black/10 bg-white/90 text-neutral-700 backdrop-blur",
+          ].join(" ")}
         >
-          <div
-            className="w-64 rounded-xl border border-black/10 bg-white p-4 text-black shadow-xl"
-            onClick={(event) => {
-              event.stopPropagation();
-            }}
-          >
-            <p className="mb-1 text-xs uppercase tracking-[0.15em] text-black/40">
-              Annotation
-            </p>
-
-            <h3 className="mb-2 text-lg font-semibold">
-              {annotation.title}
-            </h3>
-
-            <p className="text-sm leading-5 text-black/60">
-              {annotation.description}
-            </p>
-
-            <div className="mt-3 border-t border-black/10 pt-3">
-              <p className="text-xs uppercase tracking-[0.15em] text-black/40">
-                Translation
-              </p>
-
-              <p className="mt-1 text-sm">
-                {annotation.translation ??
-                  "No translation available."}
-              </p>
-            </div>
-
-            <button
-              className="mt-4 text-xs font-medium underline"
-              onClick={(event) => {
-                event.stopPropagation();
-                setOpen(false);
-              }}
-            >
-              Close
-            </button>
-          </div>
-        </Html>
-      )}
+          {String(index + 1).padStart(2, "0")}
+        </div>
+      </Html>
     </group>
   );
 }
 
 export default function CoffinViewer({
   annotations,
+  selectedAnnotationId,
   onSelectAnnotation,
 }: CoffinViewerProps) {
   return (
     <div className="h-full w-full">
-      <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-        <ambientLight intensity={1.5} />
+      <Canvas
+        camera={{
+          position: [0, 0, 5],
+          fov: 45,
+        }}
+        gl={{
+          antialias: true,
+          alpha: true,
+        }}
+      >
+        <ambientLight intensity={1.8} />
 
         <directionalLight
-          position={[3, 3, 3]}
+          position={[4, 5, 4]}
           intensity={2}
+        />
+
+        <directionalLight
+          position={[-4, 1, -2]}
+          intensity={0.8}
         />
 
         <ArtifactModel />
 
-        {annotations.map((annotation) => (
+        {annotations.map((annotation, index) => (
           <AnnotationMarker
             key={annotation.id}
             annotation={annotation}
+            index={index}
+            selected={annotation.id === selectedAnnotationId}
             onSelect={onSelectAnnotation}
           />
         ))}
@@ -146,6 +135,8 @@ export default function CoffinViewer({
           makeDefault
           enableDamping
           dampingFactor={0.08}
+          minDistance={2.5}
+          maxDistance={9}
         />
       </Canvas>
     </div>

@@ -79,7 +79,13 @@ export default function HomeContent({
                   delay: 0.08,
                   ease: [0.22, 1, 0.36, 1],
                 }}
-                className="max-w-5xl text-[clamp(3.7rem,8vw,8rem)] font-normal leading-[0.85] tracking-[-0.065em]"
+                className="motion-preset-slide-up-lg
+    motion-duration-700
+    max-w-5xl
+    text-[clamp(3.7rem,8vw,8rem)]
+    font-normal
+    leading-[0.85]
+    tracking-[-0.065em]"
               >
                 Book of the
                 <br />
@@ -102,25 +108,17 @@ export default function HomeContent({
               </motion.p>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{
-                duration: 0.8,
-                delay: 0.28,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="hidden md:block"
-            >
-              <div className="relative h-44 w-44 lg:h-52 lg:w-52">
-                <Image
-                  src="/images/bd3d-logo.png"
-                  alt=""
-                  fill
-                  className="object-contain"
-                />
-              </div>
-            </motion.div>
+            <div className="hidden md:block">
+  <div className="relative h-[320px] w-[260px] lg:h-[420px] lg:w-[340px]">
+    <Image
+      src="/images/sarco.png"
+      alt="Ancient Egyptian sarcophagus"
+      fill
+      className="object-contain motion-preset-seesaw and motion-preset-expand"
+      priority
+    />
+  </div>
+</div>
           </div>
         </div>
       </section>

@@ -1,5 +1,6 @@
 "use client";
 
+import SarcoAscii from "./SarcoAscii";
 import Image from "next/image";
 import { motion } from "motion/react";
 
@@ -29,6 +30,8 @@ export default function HomeContent({
               />
             </div>
 
+            
+
             <div>
               <p className="text-[13px] font-medium tracking-tight">
                 Book of the Dead in 3D
@@ -37,6 +40,7 @@ export default function HomeContent({
               <p className="text-[10px] uppercase tracking-[0.16em] text-black/35">
                 Digital Research Project
               </p>
+
             </div>
           </div>
 
@@ -108,17 +112,10 @@ export default function HomeContent({
               </motion.p>
             </div>
 
-            <div className="hidden md:block">
-  <div className="relative h-[320px] w-[260px] lg:h-[420px] lg:w-[340px]">
-    <Image
-      src="/images/sarco.png"
-      alt="Ancient Egyptian sarcophagus"
-      fill
-      className="object-contain motion-preset-seesaw and motion-preset-expand"
-      priority
-    />
-  </div>
+            <div className="hidden w-[400px] md:block lg:w-[500px]">
+  <SarcoAscii />
 </div>
+
           </div>
         </div>
       </section>

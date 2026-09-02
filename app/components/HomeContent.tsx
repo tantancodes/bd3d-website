@@ -4,6 +4,8 @@ import SarcoAscii from "./SarcoAscii";
 import Image from "next/image";
 import { motion } from "motion/react";
 import { FloatingDock } from "@/components/ui/floating-dock";
+import CoffinGlobe from "./CoffinGlobe";
+import CoffinIntro from "./CoffinIntro";
 
 import {
   House,
@@ -32,7 +34,7 @@ export default function HomeContent({
     {
       title: "Explore",
       icon: <ScanSearch className="h-full w-full" />,
-      href: "#explore",
+      href: "#locations",
     },
     {
       title: "Research",
@@ -47,6 +49,9 @@ export default function HomeContent({
   ];
 
   return (
+    <>  
+        <CoffinIntro />
+
     <main
       id="top"
       className="min-h-screen bg-[#f7f6f2] text-[#171714]"
@@ -54,7 +59,6 @@ export default function HomeContent({
       {/* HEADER */}
       <header className="relative z-50 border-b border-black/[0.07] bg-[#f7f6f2]/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-[1680px] items-center justify-between px-6 py-3 md:px-10 lg:px-14">
-          
           {/* BRAND */}
           <a
             href="#top"
@@ -176,7 +180,69 @@ export default function HomeContent({
         </div>
       </section>
 
-      {/* OBJECT / EXPLORE */}
+      {/* GLOBE / EXPLORE BY LOCATION */}
+      <section
+        id="locations"
+        className="scroll-mt-24 border-b border-black/[0.06]"
+      >
+        <div className="mx-auto max-w-[1680px] px-6 py-16 md:px-10 md:py-24 lg:px-14">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{
+              duration: 0.7,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="mb-10 grid gap-8 md:grid-cols-[1fr_auto] md:items-end"
+          >
+            <div>
+              <p className="mb-4 text-[10px] font-medium uppercase tracking-[0.24em] text-black/35">
+                Geographic Collection
+              </p>
+
+              <h2 className="max-w-3xl text-[clamp(3rem,6vw,6rem)] font-normal leading-[0.9] tracking-[-0.055em]">
+                Explore the collection
+                <br />
+                by location.
+              </h2>
+            </div>
+
+            <p className="max-w-sm text-[13px] leading-6 text-black/40 md:text-right">
+              Rotate the globe and select a marked location to open its
+              associated coffin and scholarly record.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 28, scale: 0.99 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{
+              duration: 0.8,
+              delay: 0.05,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="relative overflow-hidden border-y border-black/[0.08] bg-[#ebe9e3]"
+          >
+            <div className="pointer-events-none absolute left-5 top-5 z-10 md:left-7 md:top-7">
+              <p className="text-[9px] font-medium uppercase tracking-[0.2em] text-black/35">
+                Interactive Geographic Index
+              </p>
+            </div>
+
+            <CoffinGlobe />
+
+            <div className="pointer-events-none absolute bottom-5 left-5 z-10 md:bottom-7 md:left-7">
+              <p className="text-[10px] uppercase tracking-[0.15em] text-black/35">
+                Drag to rotate · Scroll to zoom · Select a marker
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* OBJECT / DOG PROTOTYPE */}
       <section
         id="explore"
         className="mx-auto max-w-[1680px] scroll-mt-24 px-6 pb-10 pt-14 md:px-10 md:pt-20 lg:px-14"
@@ -268,6 +334,7 @@ export default function HomeContent({
           </div>
         </footer>
       </section>
-    </main>
-  );
+     </main>
+  </>
+);
 }

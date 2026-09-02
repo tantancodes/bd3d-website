@@ -7,7 +7,7 @@ export default function SarcoAscii() {
     <AsciiArt
       src="/images/anubis.jpg"
       resolution={80}
-      color="#6b214f"
+      color="#dcc93a"
       animationStyle="typewriter"
       animateOnView={false}
       className="mx-auto aspect-square w-full max-w-lg bg-[#f7f6f2]"

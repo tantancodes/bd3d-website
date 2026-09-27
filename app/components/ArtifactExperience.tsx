@@ -16,6 +16,12 @@ import { Separator } from "@/components/ui/separator";
 
 import CoffinViewer from "./CoffinViewer";
 
+export type SurfaceAnchor = {
+  mesh: string;
+  faceIndex: number;
+  barycentric: [number, number, number];
+};
+
 export type Annotation = {
   id: number;
   title: string;
@@ -23,9 +29,16 @@ export type Annotation = {
   translation: string | null;
   transliteration: string | null;
   source: string | null;
+
+  // OLD annotation positioning system.
+  // Keep these for now so your existing annotations still work.
   x: number;
   y: number;
   z: number;
+
+  // NEW surface-attached annotation system.
+  // Optional while we migrate the old annotations.
+  anchor?: SurfaceAnchor;
 };
 
 type ArtifactExperienceProps = {

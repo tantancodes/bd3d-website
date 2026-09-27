@@ -18,7 +18,26 @@ export default async function Home() {
     });
   }
 
-  return (
-    <HomeContent annotations={annotations ?? []} />
-  );
+  const mappedAnnotations = (annotations ?? []).map((annotation) => ({
+  ...annotation,
+
+  anchor:
+    annotation.mesh &&
+    annotation.face_index !== null &&
+    annotation.barycentric
+      ? {
+          mesh: annotation.mesh,
+          faceIndex: Number(annotation.face_index),
+          barycentric: annotation.barycentric as [
+            number,
+            number,
+            number
+          ],
+        }
+      : undefined,
+}));
+
+return (
+  <HomeContent annotations={mappedAnnotations} />
+);
 }

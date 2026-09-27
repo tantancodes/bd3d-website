@@ -598,7 +598,7 @@ function ArtifactModel({
         "unnamed-mesh",
 
       faceIndex:
-        event.faceIndex,
+        event.faceIndex!,
 
       barycentric: [
         barycentric.x,

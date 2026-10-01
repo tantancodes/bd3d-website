@@ -20,8 +20,8 @@ export default function HomeContent() {
         </div>
         <Link href="/exhibits/psamtikseneb" className="hero-art" aria-label="Enter the Psamtik-Seneb exhibit">
           <span className="art-index">OBJECT 01 / 06</span>
-          <div className="hero-orbit" aria-hidden="true"/>
-          <Image src="/images/coffins/psamtikseneb.jpg" fill sizes="(max-width: 700px) 100vw, 50vw" className="hero-object" alt="The painted coffin of Psamtik-Seneb" priority/>
+          
+          <Image src="/images/coffins/psamtikseneb.jpg" fill sizes="(max-width: 700px) 100vw, 50vw" className="hero-object" alt="Detail of the coffin of Psamtik-Seneb" priority/>
           <div className="hero-art-caption"><span>Psamtik-Seneb<small>Chrysler Museum of Art · 71.2254</small></span><span className="enter-circle"><ArrowUpRight size={24}/></span></div>
           <span className="vertical-label">THE BOOK OF THE DEAD IN 3D</span>
         </Link>

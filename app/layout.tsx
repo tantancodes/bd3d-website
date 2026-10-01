@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 import "./exhibit.css";
+import "./museum.css";
 
 export const metadata: Metadata = {
   title: "The Book of the Dead in 3D",

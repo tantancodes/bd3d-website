@@ -72,7 +72,7 @@ function Scene({data,regions,selected,focusSerial,onSelect,command,reduced,showR
     {showRegions && regions.map(region=>{
       const offset=new Vector3(...region.direction).applyQuaternion(quaternion).multiplyScalar(-.006);
       const points=region.lines.flatMap(l=>[new Vector3(l[0],l[1],l[2]).applyMatrix4(matrix).add(offset),new Vector3(l[3],l[4],l[5]).applyMatrix4(matrix).add(offset)]);
-      return <Line key={region.id} points={points} segments color={selected===region.id?'#f5c979':'#c4b090'} lineWidth={selected===region.id?3:1} transparent opacity={selected===region.id?1:.45}/>;
+      return <Line key={region.id} points={points} segments color={selected===region.id?'#5fe0eb':'#d1c2a4'} lineWidth={selected===region.id?3:1} transparent opacity={selected===region.id?1:.45}/>;
     })}
     <OrbitControls ref={controls} makeDefault enableDamping minDistance={1} maxDistance={14} onStart={()=>{flight.current=null;}}/>
   </>;

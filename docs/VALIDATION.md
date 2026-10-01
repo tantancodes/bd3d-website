@@ -28,3 +28,7 @@ Baseline: `347364fa3ea93385795f9763d32d1754611e060a`.
 - Desktop screenshots of all six models were inspected; Psamtik-Seneb's central-column selection was also operated and inspected in the in-app browser. These tests validate mechanics and representative mappings, not every inscription's scholarly accuracy.
 - Source limitations: Amenirdis and Anonymous have no vocabulary layer; absent categories show an explicit empty state. Some mappings cover entire text sections, not individual signs. Repeated text stays one-to-many. The source Anonymous browser title conflicts with its introduction. That title is not used as an identification.
 - Non-blocking upstream development warning: React Three Fiber currently constructs `THREE.Clock`, which Three r185 deprecates in favor of Timer. Rendering and interaction tests pass; the warning is not suppressed or patched in vendor code.
+
+## Stage 3 — museum presentation
+
+Refined editorial typography, collection cards, floating navigation, exhibit entry, dark viewing room, reading panel, responsive layouts, and reduced-motion styling. Desktop collection and mobile collection/exhibit screenshots were visually inspected; corrected floating-header centering after that inspection. Type checking, zero-warning lint and production build pass.

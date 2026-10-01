@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 declare global { interface Window { parseResLite:(s:string)=>unknown; ResContext:new()=>{emSize:number}; makeDivision:(r:unknown,l:number,c:unknown,p:boolean)=>{render:(c:HTMLCanvasElement)=>void}; } }
-export default function Hieroglyphs({value,unicode,label,ready}:{value:string;unicode?:string;label:string;ready:boolean}){
+export default function Hieroglyphs({value,unicode,label,ready,unavailable}:{value:string;unicode?:string;label:string;ready:boolean;unavailable?:boolean}){
  const ref=useRef<HTMLCanvasElement>(null),[failed,setFailed]=useState(false);
  useEffect(()=>{
   let cancelled=false;
@@ -14,6 +14,6 @@ export default function Hieroglyphs({value,unicode,label,ready}:{value:string;un
   }).catch(()=>{if(!cancelled)setFailed(true);});
   return()=>{cancelled=true;};
  },[value,ready,unicode]);
- if(failed)return <p>Transcription rendering is unavailable. Consult the source edition.</p>;
+ if(failed||(unavailable&&!unicode))return <p>Transcription rendering is unavailable. Consult the source edition.</p>;
  return <div className="hieroglyph-scroll" tabIndex={0} aria-label="Scrollable hieroglyphic transcription">{unicode ? <span className="unicode-hieroglyphs" role="img" aria-label={`Hieroglyphic transcription: ${label}`}>{unicode}</span> : <canvas ref={ref} role="img" aria-label={`Hieroglyphic transcription: ${label}`}/>}</div>;
 }

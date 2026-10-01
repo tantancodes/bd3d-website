@@ -32,14 +32,15 @@ function Scene({data,regions,selected,focusSerial,onSelect,command,reduced,showR
   },[object,data.model.quaternion,data.model.settings]);
   const controls=useRef<OrbitControlsImpl>(null);
   const flight=useRef<{position:Vector3;target:Vector3}|null>(null);
-  const {camera,gl}=useThree();
+  const {camera,gl,invalidate}=useThree();
   const active=data.areas.find(a=>a.id===selected);
   useEffect(()=>{
     if(!active) return;
     const target=active.lines.reduce((sum,l)=>sum.add(new Vector3(l[0],l[1],l[2])),new Vector3()).divideScalar(active.lines.length).applyMatrix4(matrix);
     const direction=new Vector3(...active.direction).applyQuaternion(quaternion).normalize().negate();
     flight.current={target,position:target.clone().addScaledVector(direction,3.4)};
-  },[active,matrix,quaternion,focusSerial]);
+    invalidate();
+  },[active,matrix,quaternion,focusSerial,invalidate]);
   useEffect(()=>{
     if(!controls.current) return;
     const target=controls.current.target.clone();
@@ -47,12 +48,14 @@ function Scene({data,regions,selected,focusSerial,onSelect,command,reduced,showR
     if(command.kind==='reset') flight.current={position:new Vector3(0,0,7.3),target:new Vector3()};
     else if(command.kind==='left'||command.kind==='right') flight.current={position:target.clone().add(offset.applyAxisAngle(new Vector3(0,1,0),command.kind==='left' ? -.35:.35)),target};
     else flight.current={position:target.clone().add(offset.setLength(Math.min(14,Math.max(1,offset.length()*(command.kind==='in' ? .8:1.25))))),target};
-  },[command,camera]);
+    invalidate();
+  },[command,camera,invalidate]);
   useFrame((_,dt)=>{
     gl.domElement.setAttribute('data-camera',camera.position.toArray().map(n=>(Math.abs(n)<.00005?0:n).toFixed(4)).join(','));
     gl.domElement.setAttribute('data-camera-moving',String(!!flight.current));
     if(!flight.current||!controls.current) return;
-    const amount=reduced ? 1 : 1-Math.exp(-dt*6);
+    const amount=reduced ? 1 : 1-Math.exp(-Math.min(dt,.05)*6);
+    invalidate();
     camera.position.lerp(flight.current.position,amount);
     controls.current.target.lerp(flight.current.target,amount);
     controls.current.update();
@@ -77,4 +80,4 @@ function Scene({data,regions,selected,focusSerial,onSelect,command,reduced,showR
     <OrbitControls ref={controls} makeDefault enableDamping minDistance={1} maxDistance={14} onStart={()=>{flight.current=null;}}/>
   </>;
 }
-export default function ModelRoom(props:Props){return <ModelBoundary source={props.data.source} onRetry={()=>useLoader.clear(CoffinLoader,`/models/${props.data.slug}/${props.data.model.name}`)}><Canvas camera={{position:[0,0,7.3],fov:38}} dpr={[1,1.5]} fallback={<div className="model-failure">3D requires WebGL. The inscriptions remain available in the reading panel.</div>} gl={{antialias:true}}><Suspense fallback={<Loading/>}><Scene {...props}/></Suspense></Canvas></ModelBoundary>;}
+export default function ModelRoom(props:Props){return <ModelBoundary source={props.data.source} onRetry={()=>useLoader.clear(CoffinLoader,`/models/${props.data.slug}/${props.data.model.name}`)}><Canvas frameloop="demand" onCreated={({gl})=>{gl.domElement.setAttribute('role','img');gl.domElement.setAttribute('aria-label','Interactive coffin model. Use the model controls and annotation buttons to explore without dragging.');}} camera={{position:[0,0,7.3],fov:38}} dpr={[1,1.5]} fallback={<div className="model-failure">3D requires WebGL. The inscriptions remain available in the reading panel.</div>} gl={{antialias:true}}><Suspense fallback={<Loading/>}><Scene {...props}/></Suspense></Canvas></ModelBoundary>;}

@@ -36,3 +36,14 @@ Refined editorial typography, collection cards, floating navigation, exhibit ent
 ## Stage 4 — research and attribution
 
 Added a server-rendered research page with six collection/edition link pairs, methodology citation (Lucarelli & Nederhof 2023, DOI 10.1163/9789004501294_011), authoring-resource link, source credits, image rights notices, import transformations, and unresolved scholarly limits. Added Matthew Whealton to the Psamtik-Seneb source credit. Corrected its material to Stone (Chrysler Museum magazine, March–April 2013, p. 4: https://chrysler.org/legacy/media/cma-mag-mar-apr-2013.pdf), removed the unsupported “painted” characterization, and aligned displayed dates with Berkeley records, retaining “probably” where the records express uncertainty. The linked official records are authoritative for historical and acquisition detail. Typecheck, lint and production build pass.
+
+## Stage 5 — accessibility and performance
+
+- Added keyboard focus containment/restoration for the expanded model, annotation skip link, labelled WebGL canvas, focusable reading scroll area, larger controls and high-contrast focus outlines. Tabs support arrow-key navigation.
+- Resolved a reduced-motion SSR hydration mismatch using a hydration-safe external-store preference hook plus immediate CSS overrides. Automated tests now reject browser console errors in all six reduced-motion mobile exhibits.
+- Stopped speculative exhibit prefetch; verified the collection requests no model, texture, annotation API, or transcription-renderer assets. Only the opened exhibit's model set loads. Next Image provides responsive collection images. Removed the unused root tooltip provider. Research content remains server-rendered.
+- Enabled on-demand WebGL rendering with explicit camera-animation invalidation, capped pixel ratio at 1.5, and retained asset caching. Original textures remain uncompressed copies for provenance; no lossy 3D conversion was introduced.
+- Added transcription-script failure feedback. Geometry/texture failures and loading remain covered.
+- Axe WCAG A/AA scans pass on collection, research, and all six mobile exhibits. Responsive overflow/header checks cover 320, 390, 820 and 1440 px. These automated checks do not establish full accessibility certification or replace assistive-technology user testing.
+- Next output traces include all six server-side annotation JSON files. npm audit reports zero vulnerabilities. Source integrity check still passes.
+- Development-only upstream Three.Clock deprecation remains; dependency-owned code is unchanged. npm reports an unapproved optional install script for unrs-resolver; lint/type checking/build succeed without approving it.

@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link';
 import { useState } from 'react';
-import { motion, useMotionValueEvent, useScroll, useReducedMotion } from 'motion/react';
+import { motion, useMotionValueEvent, useScroll } from 'motion/react';
+import { useReducedMotion } from '@/lib/use-reduced-motion';
 import { ArrowUpRight } from 'lucide-react';
 export default function FloatingNav() {
   const { scrollY } = useScroll();

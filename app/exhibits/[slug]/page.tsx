@@ -11,5 +11,5 @@ export default async function ExhibitPage({params}: {params: Promise<{slug: stri
   const {slug} = await params;
   const coffin = getCoffin(slug), data = await getCoffinData(slug);
   if (!coffin || !data) notFound();
-  return <Exhibit coffin={coffin} data={data} />;
+  return <Exhibit key={slug} coffin={coffin} data={data} />;
 }

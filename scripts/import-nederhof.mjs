@@ -39,9 +39,9 @@ for (const slug of slugs) {
     const fragments = [];
     node.find('.frag').each((_, frag) => {
       const f = $(frag);
-      fragments.push({ hieroglyphs: clean(f.find('canvas.res').text()), transliteration: clean(f.find('.al').text()), translation: clean(f.find('.tr').text()) });
+      fragments.push({ hieroglyphs: clean(f.find('canvas.res').text()), hieroglyphUnicode: clean(f.find('.unihi').text()), transliteration: clean(f.find('.al').text()), translation: clean(f.find('.tr').text()) });
     });
-    const copy = node.clone(); copy.find('canvas, .frag, .popupref').remove();
+    const copy = node.clone(); copy.find('canvas, .frag, .popupref, h2, h3').remove();
     const isVocab = id.startsWith('lex');
     annotations.push({ id, title: clean(node.find('h2,h3').first().text()) || (isVocab ? clean(node.find('.al').text()) : id.replace(/^text:/, '')), kind: isVocab ? 'vocabulary' : fragments.length ? 'inscription' : 'interpretation', description: clean(copy.text()), fragments, areaIds: linked.map(a => a.id) });
   });
@@ -57,4 +57,5 @@ for (const slug of slugs) {
 }
 await mkdir(new URL('public/vendor/nederhof/', root), { recursive: true });
 for (const name of ['reslite.js','NewGardiner.ttf','HieroglyphicAux.ttf']) await download(host+'psamtik/'+name, 'public/vendor/nederhof/'+name);
+await download(host+'amenirdis/NewGardinerComposed.otf', 'public/vendor/nederhof/NewGardinerComposed.otf');
 await writeFile(new URL('data/import-manifest.json', root), JSON.stringify(manifest, null, 2));

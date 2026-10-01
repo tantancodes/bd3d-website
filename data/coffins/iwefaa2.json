@@ -2102,7 +2102,7 @@
       "id": "name",
       "title": "His name",
       "kind": "interpretation",
-      "description": "His name The phrase Jw=f-ꜥꜣ, inserted into the middle of the spell in the second line, is taken to be the name of the deceased. The spelling with the bookroll determinative is odd, but is paralleled by the spelling of the same name in the offering formula on both sides of the proposed inner coffin of this individual. Cf. , jw=f-ꜥꜣ=f, \"rising man\" (GEG p. 145).",
+      "description": "The phrase Jw=f-ꜥꜣ, inserted into the middle of the spell in the second line, is taken to be the name of the deceased. The spelling with the bookroll determinative is odd, but is paralleled by the spelling of the same name in the offering formula on both sides of the proposed inner coffin of this individual. Cf. , jw=f-ꜥꜣ=f, \"rising man\" (GEG p. 145).",
       "fragments": [],
       "areaIds": [
         "name"
@@ -2112,7 +2112,7 @@
       "id": "scene",
       "title": "Vignette",
       "kind": "interpretation",
-      "description": "Vignette The pectoral vignette between the text and the collar shows the deceased standing before a squatting baboon. The hieroglyph for \"sky\" is above their heads, and the side borders are formed by and , the hieroglyphs for \"west\" and \"pyramid\".",
+      "description": "The pectoral vignette between the text and the collar shows the deceased standing before a squatting baboon. The hieroglyph for \"sky\" is above their heads, and the side borders are formed by and , the hieroglyphs for \"west\" and \"pyramid\".",
       "fragments": [],
       "areaIds": [
         "scene"
@@ -2122,25 +2122,29 @@
       "id": "text:line1",
       "title": "Line 1",
       "kind": "inscription",
-      "description": "Line 1",
+      "description": "",
       "fragments": [
         {
           "hieroglyphs": "$ hlr 1000 g 0 950 c 1 57747 0 0 15 1000 1000 475 505 0 0 1000 1000 c 1 58115 0 0 15 591 591 59 698 0 0 1000 1000 c 1 57803 0 0 15 591 591 475 698 0 0 1000 1000 i g 1099 941 c 1 57878 0 0 15 1000 1000 470 74 0 0 1000 1000 c 1 57465 0 0 15 1000 1000 465 856 0 0 1000 1000 i g 1089 980 c 1 58024 0 0 15 1000 1000 223 505 0 0 1000 1000 c 1 58041 0 0 15 1000 1000 787 505 0 0 1000 1000 i g 1129 941 c 1 58336 0 0 15 1000 1000 470 168 0 0 1000 1000 c 1 57878 0 0 15 1000 1000 470 926 0 0 1000 1000 i g 1089 663 c 1 57344 0 0 15 1000 1000 332 505 0 0 1000 1000 i e",
+          "hieroglyphUnicode": "",
           "transliteration": "ḏd mdw jn Wsjr mn",
           "translation": "Saying by the Osiris so-and-so:"
         },
         {
           "hieroglyphs": "$ hlr 1000 g 0 1089 c 1 57536 0 0 15 1000 1000 233 505 0 0 1000 1000 c 1 58319 0 0 15 1000 1000 851 510 0 0 1000 1000 i g 1238 950 c 1 57756 0 0 15 1000 1000 475 500 0 0 1000 1000 i g 1099 663 c 1 57344 0 0 15 1000 1000 332 505 0 0 1000 1000 i g 812 515 c 1 58007 0 0 15 1000 1000 257 505 0 0 1000 1000 i e",
+          "hieroglyphUnicode": "",
           "transliteration": "bwt=j sp(-sn)",
           "translation": "My abomination! My abomination!"
         },
         {
           "hieroglyphs": "$ hlr 1000 g 0 950 c 1 57500 0 0 15 1000 1000 475 500 0 0 1000 1000 i g 1099 950 c 1 58328 0 0 15 1000 1000 158 233 0 0 1000 1000 c 1 58328 0 0 15 1000 1000 792 233 0 0 1000 1000 c 1 57617 0 0 15 1000 1000 475 861 0 0 1000 1000 i g 1099 663 c 1 57344 0 0 15 1000 1000 332 505 0 0 1000 1000 i g 812 950 c 1 57500 0 0 15 1000 1000 475 500 0 0 1000 1000 i g 1099 950 c 1 58381 0 0 15 1000 1000 470 252 0 0 1000 1000 c 1 57511 0 0 15 1000 1000 475 827 0 0 1000 1000 i g 1099 941 c 1 58164 0 0 15 1000 1000 470 327 0 0 1000 1000 c 1 57878 0 0 15 1000 1000 470 926 0 0 1000 1000 i g 1089 663 c 1 57344 0 0 15 1000 1000 332 505 0 0 1000 1000 i g 812 901 c 1 57463 0 0 15 953 953 446 287 0 0 1000 1000 c 1 57483 0 0 15 953 953 450 861 0 0 1000 1000 i g 1050 950 c 1 57745 0 0 15 1000 1000 475 505 0 0 1000 1000 i e",
+          "hieroglyphUnicode": "",
           "transliteration": "n wnm=j n ḫ(n)d.n=j ḥr=f",
           "translation": "I have not eaten it and I have not stepped on it."
         },
         {
           "hieroglyphs": "$ hlr 1000 g 0 1089 c 1 57536 0 0 15 1000 1000 233 505 0 0 1000 1000 c 1 58319 0 0 15 1000 1000 851 510 0 0 1000 1000 i g 1238 950 c 1 57756 0 0 15 1000 1000 475 500 0 0 1000 1000 i g 1099 663 c 1 57344 0 0 15 1000 1000 332 505 0 0 1000 1000 i g 812 980 c 1 58026 0 0 15 1000 1000 203 505 0 0 1000 1000 c 1 57713 0 0 15 1000 1000 658 500 0 0 1000 1000 i g 1129 614 c 1 58267 0 0 15 1000 1000 134 505 0 0 1000 1000 c 1 58100 0 0 15 1000 1000 515 505 0 0 1000 1000 i g 762 574 c 1 58382 0 0 15 1000 1000 287 505 0 0 1000 1000 i e",
+          "hieroglyphUnicode": "",
           "transliteration": "bwt=j pw ḥs",
           "translation": "My abomination is feces."
         }
@@ -2153,20 +2157,23 @@
       "id": "text:line2",
       "title": "Line 2",
       "kind": "inscription",
-      "description": "Line 2",
+      "description": "",
       "fragments": [
         {
           "hieroglyphs": "$ hlr 1000 g 0 950 c 1 57500 0 0 15 1000 1000 475 500 0 0 1000 1000 i g 1099 950 c 1 58328 0 0 15 1000 1000 158 233 0 0 1000 1000 c 1 58328 0 0 15 1000 1000 792 233 0 0 1000 1000 c 1 57617 0 0 15 1000 1000 475 861 0 0 1000 1000 i g 1099 663 c 1 57344 0 0 15 1000 1000 332 505 0 0 1000 1000 i g 812 505 c 1 57811 0 0 15 1000 1000 252 505 0 0 1000 1000 i g 653 644 c 1 57713 0 0 15 1000 1000 322 500 0 0 1000 1000 i g 792 941 c 1 58037 0 0 15 944 944 470 193 0 0 1000 1000 c 1 58319 0 0 15 917 917 218 876 0 0 1000 1000 c 1 58026 0 0 15 917 917 757 762 0 0 1000 1000 i g 1089 733 c 1 57491 0 0 15 1000 1000 366 500 0 0 1000 1000 i g 881 950 c 1 58324 0 0 15 1000 1000 475 124 0 0 1000 1000 c 1 58340 0 0 15 1000 1000 30 812 0 0 1000 1000 c 1 58340 0 0 15 1000 1000 475 812 0 0 1000 1000 c 1 58340 0 0 15 1000 1000 921 812 0 0 1000 1000 i e",
+          "hieroglyphUnicode": "",
           "transliteration": "n wnm=j sw ḥtp-kꜣ",
           "translation": "I have not eaten it, namely excrement."
         },
         {
           "hieroglyphs": "$ hlr 1000 g 0 950 c 1 57500 0 0 15 1000 1000 475 500 0 0 1000 1000 i g 1099 950 c 1 58381 0 0 15 1000 1000 470 252 0 0 1000 1000 c 1 57483 0 0 15 1000 1000 475 851 0 0 1000 1000 i g 1099 960 c 1 57362 0 0 15 1000 1000 480 272 0 0 1000 1000 c 1 57465 0 0 15 1000 1000 475 856 0 0 1000 1000 i g 1109 980 c 1 58024 0 0 15 1000 1000 223 505 0 0 1000 1000 c 1 58041 0 0 15 1000 1000 787 505 0 0 1000 1000 i g 1129 941 c 1 58336 0 0 15 1000 1000 470 168 0 0 1000 1000 c 1 57878 0 0 15 1000 1000 470 926 0 0 1000 1000 i g 1089 663 c 1 57344 0 0 15 1000 1000 332 505 0 0 1000 1000 i e",
+          "hieroglyphUnicode": "",
           "transliteration": "n ḫr Wsjr mn",
           "translation": "The Osiris so-and-so did not fall."
         },
         {
           "hieroglyphs": "$ hlr 1000 g 0 1050 c 1 57803 0 0 15 1000 1000 119 505 0 0 1000 1000 c 1 57344 0 0 15 1000 1000 718 505 0 0 1000 1000 i g 1198 891 c 1 58267 0 0 15 1000 1000 134 505 0 0 1000 1000 c 1 58319 0 0 15 1000 1000 653 163 0 0 1000 1000 c 1 57735 0 0 15 1000 1000 649 718 0 0 1000 1000 i g 1040 802 c 1 57878 0 0 15 856 856 401 64 0 0 1000 1000 c 1 57940 0 0 15 856 856 396 450 0 0 1000 1000 c 1 58319 0 0 15 856 856 401 886 0 0 1000 1000 i g 950 1030 c 1 57803 0 0 15 1000 1000 119 505 0 0 1000 1000 c 1 57713 0 0 15 1000 1000 708 500 0 0 1000 1000 i g 1178 861 c 1 57745 0 0 15 909 909 431 153 0 0 1000 1000 c 1 57979 0 0 15 909 909 431 540 0 0 1000 1000 c 1 58331 0 0 15 909 909 426 886 0 0 1000 1000 i g 1010 941 c 1 57667 0 0 15 1000 1000 470 505 0 0 1000 1000 c 1 58340 0 0 15 1000 1000 911 218 0 0 1000 1000 i g 1089 663 c 1 57344 0 0 15 1000 1000 332 505 0 0 1000 1000 i g 812 366 c 1 58320 0 0 15 1000 1000 183 505 0 0 1000 1000 i g 515 1000 s 500 500 1000 1000 i e",
+          "hieroglyphUnicode": "",
           "transliteration": "j ḥnwt nht Jw=f-ꜥꜣ (Ḥwt-)Ḥr t",
           "translation": "Oh, Mistress of the Sycamore, Iwefaa, Hathor; bread (?)"
         }

@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Preserve the upstream renderer byte-for-byte; global functions are consumed by Hieroglyphs.
     "public/vendor/**",
+    "playwright-report/**",
+    "test-results/**",
   ]),
 ]);
 

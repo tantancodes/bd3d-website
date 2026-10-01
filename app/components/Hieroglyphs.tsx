@@ -1,9 +1,19 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import Script from 'next/script';
 declare global { interface Window { parseResLite:(s:string)=>unknown; ResContext:new()=>{emSize:number}; makeDivision:(r:unknown,l:number,c:unknown,p:boolean)=>{render:(c:HTMLCanvasElement)=>void}; } }
-export default function Hieroglyphs({value,label}:{value:string;label:string}){
- const ref=useRef<HTMLCanvasElement>(null), [ready,setReady]=useState(false);
- useEffect(()=>{let cancelled=false;if(!ready||!ref.current)return;Promise.all([document.fonts.load('35px NewGardiner'),document.fonts.load('35px HieroglyphicAux')]).then(()=>{if(cancelled||!ref.current)return;const context=new window.ResContext();context.emSize=32;window.makeDivision(window.parseResLite(value),Number.MAX_VALUE,context,false).render(ref.current);});return()=>{cancelled=true;};},[value,ready]);
- return <><Script src="/vendor/nederhof/reslite.js" onReady={()=>setReady(true)}/><div className="hieroglyph-scroll"><canvas ref={ref} role="img" aria-label={`Hieroglyphic transcription: ${label}`}/></div></>;
+export default function Hieroglyphs({value,unicode,label,ready}:{value:string;unicode?:string;label:string;ready:boolean}){
+ const ref=useRef<HTMLCanvasElement>(null),[failed,setFailed]=useState(false);
+ useEffect(()=>{
+  let cancelled=false;
+  if(!ready||unicode||!ref.current)return;
+  Promise.all([document.fonts.load('35px NewGardiner'),document.fonts.load('35px HieroglyphicAux')]).then(()=>{
+   if(cancelled||!ref.current)return;
+   const context=new window.ResContext();context.emSize=32;
+   window.makeDivision(window.parseResLite(value),Number.MAX_VALUE,context,false).render(ref.current);
+   ref.current.dataset.rendered='true';
+  }).catch(()=>{if(!cancelled)setFailed(true);});
+  return()=>{cancelled=true;};
+ },[value,ready,unicode]);
+ if(failed)return <p>Transcription rendering is unavailable. Consult the source edition.</p>;
+ return <div className="hieroglyph-scroll" tabIndex={0} aria-label="Scrollable hieroglyphic transcription">{unicode ? <span className="unicode-hieroglyphs" role="img" aria-label={`Hieroglyphic transcription: ${label}`}>{unicode}</span> : <canvas ref={ref} role="img" aria-label={`Hieroglyphic transcription: ${label}`}/>}</div>;
 }

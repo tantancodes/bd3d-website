@@ -12,6 +12,6 @@ export const collection: Coffin[] = [
 ];
 export const getCoffin = (slug: string) => collection.find(coffin => coffin.slug === slug);
 export type Region = { id: string; textId: string; direction: [number,number,number]; rotation: number; lines: number[][] };
-export type Fragment = { hieroglyphs: string; transliteration: string; translation: string };
+export type Fragment = { hieroglyphs: string; hieroglyphUnicode?: string; transliteration: string; translation: string };
 export type Inscription = { id: string; title: string; kind: 'inscription'|'interpretation'|'vocabulary'; description: string; fragments: Fragment[]; areaIds: string[] };
-export type CoffinData = { slug: string; source: string; model: { name: string; quaternion: [number,number,number,number] }; areas: Region[]; annotations: Inscription[] };
+export type CoffinData = { slug: string; source: string; model: { name: string; quaternion: [number,number,number,number]; settings: number[] }; areas: Region[]; annotations: Inscription[] };

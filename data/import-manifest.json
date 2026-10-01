@@ -250,5 +250,11 @@
     "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtik/HieroglyphicAux.ttf",
     "bytes": 4372,
     "sha256": "106289c76e5ba939f1f88c9f86c03399fbf902192e3a61863f63559e8e0e4211"
+  },
+  {
+    "path": "public/vendor/nederhof/NewGardinerComposed.otf",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/amenirdis/NewGardinerComposed.otf",
+    "bytes": 16084,
+    "sha256": "8431026c525187fe23969a1f7dea14ae2f1288bcf44a0596bae31ad8925e86a8"
   }
 ]

@@ -1,21 +1,19 @@
-import { Vector3 } from 'three';
+import { Vector2, Vector3, type Camera, type Matrix4 } from 'three';
 import type { Region } from './collection';
-/** Test in the source region's tangent plane, without changing source coordinates. */
-export function containsSurfacePoint(region: Region, point: Vector3): boolean {
-  const n = new Vector3(...region.direction).normalize();
-  const u = new Vector3().crossVectors(n, Math.abs(n.y) < .9 ? new Vector3(0,1,0) : new Vector3(1,0,0)).normalize();
-  const v = new Vector3().crossVectors(n,u);
-  const points = region.lines.map(line=>new Vector3(line[0],line[1],line[2]));
-  if (points.length < 3) return false;
-  const center = points.reduce((sum,p)=>sum.add(p),new Vector3()).divideScalar(points.length);
-  const radius = Math.max(...points.map(p=>p.distanceTo(center)));
-  // Avoid selecting the opposite side of a closed object through its projected polygon.
-  if (Math.abs(point.clone().sub(center).dot(n)) > Math.max(radius*.35,.025)) return false;
-  const x=point.dot(u), y=point.dot(v);
-  let inside=false;
-  for(let i=0,j=points.length-1;i<points.length;j=i++) {
-    const xi=points[i].dot(u), yi=points[i].dot(v), xj=points[j].dot(u), yj=points[j].dot(v);
-    if((yi>y)!==(yj>y) && x<(xj-xi)*(y-yi)/(yj-yi)+xi) inside=!inside;
+/** Match the source viewer's nonzero screen-space polygon hit test.
+ * No synthetic regions, tangent-plane fitting, or distance tolerance is introduced.
+ */
+export function containsProjectedPoint(region: Region, pointer: Vector2, matrix: Matrix4, camera: Camera): boolean {
+  const points = [region.lines[0]?.slice(0,3), ...region.lines.map(line => line.slice(3,6))]
+    .filter((p): p is number[] => !!p)
+    .map(p => new Vector3(p[0],p[1],p[2]).applyMatrix4(matrix).project(camera));
+  if (points.length < 4 || points.some(p=>p.z < -1 || p.z > 1)) return false;
+  let winding=0;
+  for(let i=0;i<points.length;i++) {
+    const a=points[i], b=points[(i+1)%points.length];
+    const side=(b.x-a.x)*(pointer.y-a.y)-(pointer.x-a.x)*(b.y-a.y);
+    if(a.y<=pointer.y && b.y>pointer.y && side>0) winding++;
+    if(a.y>pointer.y && b.y<=pointer.y && side<0) winding--;
   }
-  return inside;
+  return winding!==0;
 }

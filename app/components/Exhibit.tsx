@@ -23,7 +23,7 @@ export default function Exhibit({coffin,data}:{coffin:Coffin;data:CoffinData}) {
  function choose(a:Inscription){setSelected(a.areaIds[0]);}
  function camera(kind:CameraCommand['kind']){if(kind==='reset')setSelected(null);setCommand(c=>({kind,serial:c.serial+1}));}
  function cycle(delta:number){if(!annotation)return;const i=annotation.areaIds.indexOf(selected!);setSelected(annotation.areaIds[(i+delta+annotation.areaIds.length)%annotation.areaIds.length]);}
- useEffect(()=>{const handler=(e:KeyboardEvent)=>{if(e.target instanceof HTMLInputElement||e.target instanceof HTMLSelectElement||e.target instanceof HTMLTextArea)return;if(e.key==='Escape'){setExpanded(false);setHelp(false);}if(e.key.toLowerCase()==='r'){setSelected(null);setCommand(c=>({kind:'reset',serial:c.serial+1}));}};window.addEventListener('keydown',handler);return()=>window.removeEventListener('keydown',handler);},[]);
+ useEffect(()=>{const handler=(e:KeyboardEvent)=>{if(e.target instanceof HTMLInputElement||e.target instanceof HTMLSelectElement||e.target instanceof HTMLTextAreaElement)return;if(e.key==='Escape'){setExpanded(false);setHelp(false);}if(e.key.toLowerCase()==='r'){setSelected(null);setCommand(c=>({kind:'reset',serial:c.serial+1}));}};window.addEventListener('keydown',handler);return()=>window.removeEventListener('keydown',handler);},[]);
  const index=collection.findIndex(c=>c.slug===coffin.slug), next=collection[(index+1)%collection.length];
  return <main className={`exhibit-page ${expanded?'is-expanded':''}`}>
   <header className="exhibit-header"><Link href="/#collection" className="back-link"><ArrowLeft size={17}/> Collection</Link><Link href="/" className="wordmark">BD<span>3D</span><i/></Link><span>EXHIBIT {String(index+1).padStart(2,'0')} / 06</span></header>

@@ -33,3 +33,14 @@ test('research sources are available and layout is accessible',async({page})=>{
 });
 test('renderer failure gives a readable fallback',async({page})=>{await page.route('**/vendor/nederhof/reslite.js',r=>r.abort());await page.goto('/exhibits/psamtik');await expect(page.getByText('Transcription rendering is unavailable. Consult the source edition.').first()).toBeVisible();await expect(page.locator('.translation').first()).toBeVisible();});
 test('unknown exhibits and API return 404',async({request})=>{expect((await request.get('/exhibits/not-an-object')).status()).toBe(404);expect((await request.get('/api/coffins/not-an-object')).status()).toBe(404);});
+
+test('client navigation keeps each exhibit state isolated',async({page})=>{
+ const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+ await page.goto('/');await page.getByRole('link',{name:'Enter the Psamtik-Seneb exhibit',exact:true}).click();
+ for(const slug of slugs){await expect(page).toHaveURL(new RegExp(`/exhibits/${slug}$`));await expect(page.locator('.model-stage')).toHaveAttribute('data-model-ready','true');await expect(page.locator('.annotation.selected')).toHaveCount(0);await page.locator('.annotation-title').first().click();await expect(page.locator('.annotation.selected')).toHaveCount(1);if(slug!=='psamtik')await page.locator('.next-exhibit').click();}
+ expect(errors).toEqual([]);
+});
+test('desktop accessibility and tablet exhibit layout',async({page})=>{
+ for(const path of ['/', '/research', '/exhibits/psamtikseneb']){await page.goto(path);if(path==='/')await expect(page.locator('#hero-title')).toHaveCSS('opacity','1');if(path.startsWith('/exhibits/')){await expect(page.locator('.exhibit-intro')).toHaveCSS('opacity','1');await expect(page.locator('.model-stage')).toHaveAttribute('data-model-ready','true');}expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze()).violations).toEqual([]);}
+ await page.setViewportSize({width:820,height:1180});await expect(page.locator('.model-stage')).toHaveAttribute('data-model-ready','true');await noOverflow(page);await page.screenshot({path:'test-results/exhibit-tablet.png',fullPage:true});
+});

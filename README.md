@@ -1,89 +1,41 @@
-# Book of the Dead in 3D
+# The Book of the Dead in 3D
 
-An interactive web platform for exploring photogrammetric 3D models and
-spatially anchored research annotations.
+A museum-style collection and reading interface for six published Egyptian coffin models. This branch redesigns the UC Berkeley project prototype while preserving links to the scholarly editions and collection records.
 
-I built this prototype as part of my work with UC Berkeley's Book of the
-Dead in 3D project. The goal is to explore how 3D cultural heritage objects
-can be connected to structured scholarly data including annotations,
-translations, transliterations, and object metadata.
+## Run
 
-## What it does
+```sh
+npm ci
+npm run dev
+```
 
-- Renders photogrammetric GLB models directly in the browser
-- Supports interactive rotation and exploration of 3D objects
-- Uses raycasting to identify coordinates on model geometry
-- Anchors research annotations to 3D positions
-- Stores annotation content and coordinates in PostgreSQL through Supabase
-- Fetches annotation data server-side with Next.js
-- Displays annotation details through an interactive research interface
-- Provides a geographic interface for navigating objects by location
+Open http://localhost:3000. The six exhibits and research page do not require environment variables or a database. Existing Supabase helpers and earlier prototype components remain in the repository; the museum routes use checked-in source snapshots.
+
+```sh
+npm run lint
+npm run typecheck
+npm run build
+npm run start -- --port 3100
+PLAYWRIGHT_BASE_URL=http://127.0.0.1:3100 npx playwright test
+node scripts/verify-import.mjs
+```
+
+Browser tests use installed Google Chrome (`channel: 'chrome'`). Reports and screenshots are written to ignored `playwright-report/` and `test-results/` directories. Test failures must be investigated before release.
 
 ## Architecture
 
-The application separates the 3D interface from the research data.
+- Next.js 16 / React 19 / TypeScript; statically generated exhibit pages and server-side annotation loading.
+- React Three Fiber / Three.js / Drei; OBJ + MTL + original textures loaded only for the opened exhibit, with on-demand rendering.
+- Source surface polygons connect to transcriptions, transliterations, translations, interpretation, and vocabulary entries. Camera and polygon transforms share the model’s source orientation and normalization.
+- Motion and CSS provide restrained transitions, with hydration-safe reduced-motion handling.
+- Responsive Next Image photography and self-hosted Geist fonts; server-rendered research/provenance content.
 
-Annotation records are stored in Supabase/PostgreSQL with their associated
-x, y, and z coordinates. Next.js retrieves those records server-side and
-passes them into the interactive React interface. React Three Fiber renders
-the GLB model and maps the database records to markers positioned within the
-Three.js scene.
+## Source data and editorial limits
 
-Photogrammetry → GLB → Next.js → React Three Fiber / Three.js
+`data/coffins/` contains 314 extracted entries and 607 linked regions. `data/import-manifest.json` records source URLs, byte sizes and SHA-256 hashes for models, textures, renderer, fonts, and source HTML. `data/photography-manifest.json` records the original collection photographs.
 
-PostgreSQL / Supabase → Next.js Server Components → React → 3D annotations
+`scripts/import-nederhof.mjs` imports the published St Andrews editions. It parses recognized source calls without executing remote JavaScript. `scripts/import-photography.mjs` creates resized collection images. Re-running an importer changes scholarly snapshots and must be reviewed. Downloaded HTML caches in `data/sources/` remain local and ignored; source-coordinate comparison runs when those caches are present. Asset integrity can be verified from a clean checkout.
 
-## Tech Stack
+The research page explains methodology, credits, transformations, and uncertainties. Missing mappings are not invented. Full source grammatical popups and critical apparatus remain in the linked original editions. Display scale is not physical measurement. Original model sets are 3.8–19.3 MiB each; lower-bandwidth derivatives would require a separate, provenance-preserving asset pipeline.
 
-**Frontend**
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- shadcn/ui
-- Motion
-
-**3D**
-- Three.js
-- React Three Fiber
-- Drei
-- GLTF / GLB
-
-**Backend & Data**
-- Supabase
-- PostgreSQL
-- Row Level Security
-
-**Deployment**
-- Vercel
-- Git / GitHub
-
-## How the 3D annotations work
-
-The GLB model is loaded into a Three.js scene using Drei's `useGLTF`.
-React Three Fiber provides the rendering layer between React and Three.js.
-
-Clicks on the model use raycasting to determine the intersection point on
-the 3D geometry. The resulting `(x, y, z)` coordinates can then be associated
-with an annotation record.
-
-At runtime, annotation records are retrieved from PostgreSQL and rendered at
-their stored coordinates in the 3D scene. Selecting a marker opens the
-corresponding research content in the interface.
-
-## Status
-
-This repository is an active prototype exploring the technical architecture
-for connecting photogrammetric models with structured research data.
-
-Current work focuses on the 3D annotation interface, geographic object
-navigation, and integration between the web application and the
-photogrammetry workflow.
-
-## Running locally
-
-Clone the repository and install dependencies:
-
-```bash
-npm install
-npm run dev
+See [validation and known issues](docs/VALIDATION.md). The earlier prototype README is preserved in [original architecture notes](docs/ORIGINAL-PROTOTYPE.md).

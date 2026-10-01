@@ -60,24 +60,27 @@ for(const slug of slugs){
   expect(errors).toEqual([]);
  });
 }
-test('geometry failure preserves reading and retries successfully',async({page})=>{
- await page.route('**/models/psamtik/*.obj',r=>r.abort());
- await page.goto('/exhibits/psamtik');
+for(const slug of slugs){
+test(`${slug}: geometry failure preserves reading and retries successfully`,async({page})=>{
+ await page.route(`**/models/${slug}/*.obj`,r=>r.abort());
+ await page.goto(`/exhibits/${slug}`);
  await expect(page.getByText('The model could not load.')).toBeVisible();
  await expect(page.locator('.translation').first()).toBeVisible();
- await page.unroute('**/models/psamtik/*.obj');
+ await page.unroute(`**/models/${slug}/*.obj`);
  await page.getByRole('button',{name:'Try again',exact:true}).click();
  await expect(page.locator('.model-stage')).toHaveAttribute('data-model-ready','true');
 });
-test('texture failure is reported instead of silently showing an untextured object',async({page})=>{
- await page.route('**/models/psamtik/*.jpg',r=>r.abort());
- await page.goto('/exhibits/psamtik');
+test(`${slug}: texture failure is reported instead of silently showing an untextured object`,async({page})=>{
+ await page.route(`**/models/${slug}/*.jpg`,r=>r.abort());
+ await page.goto(`/exhibits/${slug}`);
  await expect(page.getByText('The model could not load.')).toBeVisible();
 });
-test('loading state remains visible while geometry is delayed',async({page})=>{
+test(`${slug}: loading state remains visible while geometry is delayed`,async({page})=>{
  let release!:()=>void;const gate=new Promise<void>(resolve=>{release=resolve;});
- await page.route('**/models/psamtik/*.obj',async r=>{await gate;await r.continue();});
- await page.goto('/exhibits/psamtik');
+ await page.route(`**/models/${slug}/*.obj`,async r=>{await gate;await r.continue();});
+ await page.goto(`/exhibits/${slug}`);
  await expect(page.getByText('Bringing the object into view')).toBeVisible();
  release();await expect(page.locator('.model-stage')).toHaveAttribute('data-model-ready','true');
 });
+
+}

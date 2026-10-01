@@ -32,3 +32,7 @@ Baseline: `347364fa3ea93385795f9763d32d1754611e060a`.
 ## Stage 3 — museum presentation
 
 Refined editorial typography, collection cards, floating navigation, exhibit entry, dark viewing room, reading panel, responsive layouts, and reduced-motion styling. Desktop collection and mobile collection/exhibit screenshots were visually inspected; corrected floating-header centering after that inspection. Type checking, zero-warning lint and production build pass.
+
+## Stage 4 — research and attribution
+
+Added a server-rendered research page with six collection/edition link pairs, methodology citation (Lucarelli & Nederhof 2023, DOI 10.1163/9789004501294_011), authoring-resource link, source credits, image rights notices, import transformations, and unresolved scholarly limits. Added Matthew Whealton to the Psamtik-Seneb source credit. Corrected its material to Stone (Chrysler Museum magazine, March–April 2013, p. 4: https://chrysler.org/legacy/media/cma-mag-mar-apr-2013.pdf), removed the unsupported “painted” characterization, and aligned displayed dates with Berkeley records, retaining “probably” where the records express uncertainty. The linked official records are authoritative for historical and acquisition detail. Typecheck, lint and production build pass.

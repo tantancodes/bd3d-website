@@ -1,0 +1,44 @@
+newmtl Solid
+Ka  1.0 1.0 1.0
+Kd  1.0 1.0 1.0
+Ks  0.0 0.0 0.0
+d  1.0
+Ns  0.0
+illum 0
+
+newmtl iwefaa2scaled
+Ka  1.0 1.0 1.0
+Kd  1.0 1.0 1.0
+Ks  0.0 0.0 0.0
+d  1.0
+Ns  0.0
+illum 0
+map_Kd iwefaa2scaled.jpg
+
+newmtl iwefaa2scaled1
+Ka  1.0 1.0 1.0
+Kd  1.0 1.0 1.0
+Ks  0.0 0.0 0.0
+d  1.0
+Ns  0.0
+illum 0
+map_Kd iwefaa2scaled1.jpg
+
+newmtl iwefaa2scaled2
+Ka  1.0 1.0 1.0
+Kd  1.0 1.0 1.0
+Ks  0.0 0.0 0.0
+d  1.0
+Ns  0.0
+illum 0
+map_Kd iwefaa2scaled2.jpg
+
+newmtl iwefaa2scaled3
+Ka  1.0 1.0 1.0
+Kd  1.0 1.0 1.0
+Ks  0.0 0.0 0.0
+d  1.0
+Ns  0.0
+illum 0
+map_Kd iwefaa2scaled3.jpg
+

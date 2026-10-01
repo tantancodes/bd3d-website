@@ -1,212 +1,45 @@
-"use client";
-
-import Image from "next/image";
-import { motion } from "motion/react";
-
-import ArtifactExperience, {
-  type Annotation,
-} from "./ArtifactExperience";
-
-type HomeContentProps = {
-  annotations: Annotation[];
-};
-
-export default function HomeContent({
-  annotations,
-}: HomeContentProps) {
-  return (
-    <main className="min-h-screen bg-[#f7f6f2] text-[#171714]">
-      <header className="border-b border-black/[0.08] bg-[#f7f6f2]/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-[1680px] items-center justify-between px-6 py-4 md:px-10 lg:px-14">
-          <div className="flex items-center gap-3">
-            <div className="relative size-12 overflow-hidden rounded-full border border-black/10 bg-white">
-              <Image
-                src="/images/bd3d-logo.png"
-                alt="Book of the Dead in 3D logo"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
-
-            <div>
-              <p className="text-[13px] font-medium tracking-tight">
-                Book of the Dead in 3D
-              </p>
-
-              <p className="text-[10px] uppercase tracking-[0.16em] text-black/35">
-                Digital Research Project
-              </p>
-            </div>
-          </div>
-
-          <nav className="flex items-center gap-7 text-[13px] text-black/45">
-            {["Explore", "Project", "About"].map((item) => (
-              <button
-                key={item}
-                className="relative transition-colors duration-300 hover:text-black
-                after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0
-                after:bg-black after:transition-all after:duration-300
-                hover:after:w-full"
-              >
-                {item}
-              </button>
-            ))}
-          </nav>
+'use client';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useState } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
+import { ArrowDown, ArrowRight, ArrowUpRight, Box, Search, X } from 'lucide-react';
+import { collection } from '@/lib/collection';
+import FloatingNav from './FloatingNav';
+export default function HomeContent() {
+  const [query,setQuery] = useState(''), [filter,setFilter] = useState('All objects');
+  const reduced = useReducedMotion();
+  const filtered = collection.filter(c => (filter === 'All objects' || c.material === filter) && `${c.name} ${c.museum} ${c.accession}`.toLowerCase().includes(query.toLowerCase()));
+  return <><a className="skip-link" href="#collection">Skip to collection</a><FloatingNav/>
+    <main>
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <p className="eyebrow"><span className="status-dot"/> A DIGITAL COLLECTION · UC BERKELEY</p>
+          <motion.h1 id="hero-title" initial={reduced ? false : {opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{duration:.8}}>A world<br/>beyond<br/><span>the surface.</span></motion.h1>
+          <div className="hero-bottom"><p>Ancient Egyptian coffins.<br/>Extraordinary lives. Stories written<br/>to last an eternity.</p><Link className="round-link" href="#collection" aria-label="Explore the collection"><ArrowDown size={24}/></Link></div>
         </div>
-      </header>
-
-      <section className="relative overflow-hidden border-b border-black/[0.06]">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(83,0,77,0.07),transparent_35%)]" />
-
-        <div className="relative mx-auto max-w-[1680px] px-6 py-14 md:px-10 md:py-20 lg:px-14">
-          <div className="grid items-end gap-10 md:grid-cols-[1fr_auto]">
-            <div>
-              <motion.p
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="mb-5 text-[10px] font-medium uppercase tracking-[0.24em] text-black/35"
-              >
-                Interactive Cultural Heritage Research
-              </motion.p>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 28 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.8,
-                  delay: 0.08,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="motion-preset-slide-up-lg
-    motion-duration-700
-    max-w-5xl
-    text-[clamp(3.7rem,8vw,8rem)]
-    font-normal
-    leading-[0.85]
-    tracking-[-0.065em]"
-              >
-                Book of the
-                <br />
-                Dead in 3D
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.6,
-                  delay: 0.2,
-                  ease: "easeOut",
-                }}
-                className="mt-8 max-w-xl text-[15px] leading-7 text-black/45"
-              >
-                Explore ancient Egyptian objects through interactive
-                three-dimensional models, scholarly annotations, translations,
-                and digital research.
-              </motion.p>
-            </div>
-
-            <div className="hidden md:block">
-  <div className="relative h-[320px] w-[260px] lg:h-[420px] lg:w-[340px]">
-    <Image
-      src="/images/sarco.png"
-      alt="Ancient Egyptian sarcophagus"
-      fill
-      className="object-contain motion-preset-seesaw and motion-preset-expand"
-      priority
-    />
-  </div>
-</div>
-          </div>
-        </div>
+        <Link href="/exhibits/psamtikseneb" className="hero-art" aria-label="Enter the Psamtik-Seneb exhibit">
+          <span className="art-index">OBJECT 01 / 06</span>
+          <div className="hero-orbit" aria-hidden="true"/>
+          <Image src="/images/coffins/psamtikseneb.jpg" fill sizes="(max-width: 700px) 100vw, 50vw" className="hero-object" alt="The painted coffin of Psamtik-Seneb" priority/>
+          <div className="hero-art-caption"><span>Psamtik-Seneb<small>Chrysler Museum of Art · 71.2254</small></span><span className="enter-circle"><ArrowUpRight size={24}/></span></div>
+          <span className="vertical-label">THE BOOK OF THE DEAD IN 3D</span>
+        </Link>
       </section>
-
-      <section className="mx-auto max-w-[1680px] px-6 pb-10 pt-14 md:px-10 md:pt-20 lg:px-14">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.25 }}
-          transition={{
-            duration: 0.7,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          className="mb-10 md:mb-14"
-        >
-          <p className="mb-5 text-[10px] font-medium uppercase tracking-[0.24em] text-black/35">
-            Digital Object / Prototype / 001
-          </p>
-
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h2 className="text-[clamp(4rem,9vw,8rem)] font-normal leading-[0.82] tracking-[-0.065em]">
-                Dog
-              </h2>
-
-              <p className="mt-7 max-w-lg text-[14px] leading-6 text-black/45">
-                Photogrammetric study object with spatially anchored research
-                annotations.
-              </p>
-            </div>
-
-            <div className="flex gap-10 pb-1 text-[10px] uppercase tracking-[0.15em]">
-              <div>
-                <p className="mb-2 text-black/25">Format</p>
-                <p className="text-black/55">3D / GLB</p>
-              </div>
-
-              <div>
-                <p className="mb-2 text-black/25">Annotations</p>
-                <p className="text-black/55">
-                  {String(annotations.length).padStart(2, "0")}
-                </p>
-              </div>
-
-              <div>
-                <p className="mb-2 text-black/25">Mode</p>
-                <p className="text-black/55">Interactive</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 32, scale: 0.99 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{
-            duration: 0.8,
-            delay: 0.05,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        >
-          <ArtifactExperience annotations={annotations} />
-        </motion.div>
-
-        <footer className="mt-8 border-t border-black/[0.08] py-8">
-          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-3">
-              <div className="relative size-8">
-                <Image
-                  src="/images/bd3d-logo.png"
-                  alt=""
-                  fill
-                  className="object-contain"
-                />
-              </div>
-
-              <p className="text-[11px] uppercase tracking-[0.14em] text-black/40">
-                Book of the Dead in 3D
-              </p>
-            </div>
-
-            <p className="text-[10px] uppercase tracking-[0.15em] text-black/30">
-              Interactive Digital Research
-            </p>
-          </div>
-        </footer>
+      <div className="intro-strip"><span>THE BOOK OF THE DEAD IN 3D</span><p>A closer encounter with ancient Egypt.<br/>Explore the objects. Follow the inscriptions. Find the human stories.</p><span className="strip-mark" aria-hidden="true">↗</span></div>
+      <section id="collection" className="collection-section">
+        <div className="section-heading"><div><p className="eyebrow">01 — THE COLLECTION</p><h2>Six objects.<br/><span>Countless stories.</span></h2></div><p>Step into an exhibit of your own.<br/>Turn each coffin in three dimensions and<br/>read the words inscribed on its surface.</p></div>
+        <div className="collection-tools"><div className="filters" aria-label="Filter by material">{['All objects','Wood','Stone'].map(f=><button key={f} aria-pressed={filter===f} onClick={()=>setFilter(f)}>{f}{f==='All objects' && <sup>06</sup>}</button>)}</div><div className="search-box"><Search size={16}/><input aria-label="Search the collection" placeholder="Find an object, name, or museum" value={query} onChange={e=>setQuery(e.target.value)}/>{query && <button onClick={()=>setQuery('')} aria-label="Clear search"><X size={15}/></button>}</div></div>
+        <p className="sr-only" role="status">{filtered.length} objects found</p>
+        <div className="collection-grid">{filtered.map(c=><motion.article key={c.slug} initial={reduced ? false : {opacity:0,y:25}} whileInView={{opacity:1,y:0}} viewport={{once:true,amount:.12}} transition={{duration:.55}}>
+          <Link className="exhibit-card" href={`/exhibits/${c.slug}`}>
+            <div className="card-image" style={{backgroundColor:c.color}}><span className="card-number">{String(collection.indexOf(c)+1).padStart(2,'0')}</span><Image src={`/images/coffins/${c.slug}.jpg`} alt={`Coffin of ${c.name}`} fill sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"/><span className="card-entry">Enter exhibit <ArrowUpRight size={19}/></span><span className="model-tag"><Box size={13}/> EXPLORE IN 3D</span></div>
+            <div className="card-heading"><h3>{c.name}</h3><ArrowUpRight size={23}/></div><p>{c.subtitle}</p><div className="card-meta"><span>{c.museum}</span><span>{c.accession}</span></div>
+          </Link>
+        </motion.article>)}</div>
+        {!filtered.length && <div className="empty-state"><h3>No objects found.</h3><p>Try a name, museum, or accession number.</p><button onClick={()=>{setQuery('');setFilter('All objects');}}>Reset filters <ArrowRight size={16}/></button></div>}
       </section>
-    </main>
-  );
+      <section className="project-section" id="project"><p className="eyebrow">02 — LOOK CLOSER</p><div className="project-grid"><h2>More than<br/>an object.<br/><em>A life.</em></h2><div><p className="project-lead">A coffin was a place of transformation. Its images and words were made to protect a person on their journey beyond death.</p><p>The Book of the Dead in 3D brings these surfaces into view. Photogrammetry and linked scholarly annotations make it possible to move between the object, its inscriptions, and their meaning.</p><Link className="text-link" href="/research">Discover the research <ArrowUpRight size={19}/></Link></div></div><div className="project-features"><span><b>01</b> Explore from every angle</span><span><b>02</b> Read the original inscriptions</span><span><b>03</b> Connect words to their surfaces</span></div></section>
+    </main><footer className="site-footer"><Link className="wordmark" href="/">BD<span>3D</span><i/></Link><p>The Book of the Dead in 3D<br/><span>Objects preserved. Knowledge shared.</span></p><a href="https://3dcoffins.berkeley.edu/">Visit the Berkeley project <ArrowUpRight size={15}/></a></footer>
+  </>;
 }

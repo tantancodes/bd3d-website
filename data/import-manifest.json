@@ -1,0 +1,254 @@
+[
+  {
+    "path": "data/sources/psamtikseneb.html",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtikseneb/",
+    "bytes": 110149,
+    "sha256": "4e08134d0d4a58562ba519730b38569b6838dcc54cb0248f9bfb5e8974fc6fe7"
+  },
+  {
+    "path": "public/models/psamtikseneb/psamtik-seneb-30k.obj",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtikseneb/psamtik-seneb-30k.obj",
+    "bytes": 3415431,
+    "sha256": "00faaef43b1f63e64945a5173b04bc18dc020d8af35f73398e4f9d47e4d1430d"
+  },
+  {
+    "path": "public/models/psamtikseneb/psamtik-seneb-30k.mtl",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtikseneb/psamtik-seneb-30k.mtl",
+    "bytes": 925,
+    "sha256": "f5f5cb55c8a8f38b22c17ee6dde9b70b5700b77ea436896b347165cb76cca3a1"
+  },
+  {
+    "path": "public/models/psamtikseneb/psamtik-seneb-30k.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtikseneb/psamtik-seneb-30k.jpg",
+    "bytes": 4124047,
+    "sha256": "5a7a66c98f790aae8d0bf09142d735eae3be7cbcf18480270423aff30764edf0"
+  },
+  {
+    "path": "public/models/psamtikseneb/psamtik-seneb-30k1.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtikseneb/psamtik-seneb-30k1.jpg",
+    "bytes": 4357516,
+    "sha256": "76bf0250f53232561bf6765c446e7d839a167b605b413e944e5e2cafa71a0df6"
+  },
+  {
+    "path": "public/models/psamtikseneb/psamtik-seneb-30k2.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtikseneb/psamtik-seneb-30k2.jpg",
+    "bytes": 3874086,
+    "sha256": "6882bc1ff485dbd27c816d7147437f47689bfb373719367edc249ba5417c0dec"
+  },
+  {
+    "path": "public/models/psamtikseneb/psamtik-seneb-30k3.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtikseneb/psamtik-seneb-30k3.jpg",
+    "bytes": 4491706,
+    "sha256": "89d958d92c3838c55f819c9593146986267cb128ce658322a5470f42b80a3873"
+  },
+  {
+    "path": "data/sources/irethoreru.html",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/irethoreru/",
+    "bytes": 284092,
+    "sha256": "c4491e97a214979989fd2dc85d6931eb6edb59c24a701158805098dde81ccf26"
+  },
+  {
+    "path": "public/models/irethoreru/irethoreru-FAMSF-30k.obj",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/irethoreru/irethoreru-FAMSF-30k.obj",
+    "bytes": 3359065,
+    "sha256": "e00b9dd087d7568d8efd690443258a080ba2cc0f8dde85f311e715f1978f97fb"
+  },
+  {
+    "path": "public/models/irethoreru/irethoreru-FAMSF-30k.mtl",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/irethoreru/irethoreru-FAMSF-30k.mtl",
+    "bytes": 949,
+    "sha256": "ab3854fa0d707e480467d4dfda020eef27aace6ece57f1e0c949f4cf09a2b907"
+  },
+  {
+    "path": "public/models/irethoreru/irethoreru-FAMSF-30k.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/irethoreru/irethoreru-FAMSF-30k.jpg",
+    "bytes": 2993462,
+    "sha256": "17c431923687318940288f0f7f5984ac7005f60909044a2b41bcc6cbc179aaa4"
+  },
+  {
+    "path": "public/models/irethoreru/irethoreru-FAMSF-30k1.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/irethoreru/irethoreru-FAMSF-30k1.jpg",
+    "bytes": 3270482,
+    "sha256": "57808298579238a66e8e3a7366b75bdc79e07eefa9cd551d49d3abeca8d5dad8"
+  },
+  {
+    "path": "public/models/irethoreru/irethoreru-FAMSF-30k2.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/irethoreru/irethoreru-FAMSF-30k2.jpg",
+    "bytes": 2526207,
+    "sha256": "0d706e3bdb810bfcc5f7b2ea8ec314bda42b2e3c36dddea134fe288e41a09ce1"
+  },
+  {
+    "path": "public/models/irethoreru/irethoreru-FAMSF-30k3.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/irethoreru/irethoreru-FAMSF-30k3.jpg",
+    "bytes": 3029733,
+    "sha256": "4a39510a817d1deddbc1f62a4735f60c8ca404b7f14f0e41f2d2b9058b75006f"
+  },
+  {
+    "path": "data/sources/iwefaa2.html",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/iwefaa2/",
+    "bytes": 46019,
+    "sha256": "4e423ac02feb228dc26e0202efb3157209240bcc41604a742e2d895f06fe64e6"
+  },
+  {
+    "path": "public/models/iwefaa2/iwefaa2scaled.obj",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/iwefaa2/iwefaa2scaled.obj",
+    "bytes": 3125053,
+    "sha256": "beacce9542cc07e1efcbedbfd96cbffd987dcd9fb9cc0dbbf58e20be5667590d"
+  },
+  {
+    "path": "public/models/iwefaa2/iwefaa2scaled.mtl",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/iwefaa2/iwefaa2scaled.mtl",
+    "bytes": 607,
+    "sha256": "c17411506b5263a3d60c6c249d93636b36c84a18cdaeee884bf8bbca91e13223"
+  },
+  {
+    "path": "public/models/iwefaa2/iwefaa2scaled.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/iwefaa2/iwefaa2scaled.jpg",
+    "bytes": 2253234,
+    "sha256": "fe7c81a342ffbab09145845d0d085c5f388c05644ecf7f58279b7ef6373bdb08"
+  },
+  {
+    "path": "public/models/iwefaa2/iwefaa2scaled1.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/iwefaa2/iwefaa2scaled1.jpg",
+    "bytes": 3417953,
+    "sha256": "94d655d3094d1af959721496e41ce0ed142adc114dd6110ee81790b0d34633e3"
+  },
+  {
+    "path": "public/models/iwefaa2/iwefaa2scaled2.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/iwefaa2/iwefaa2scaled2.jpg",
+    "bytes": 2808090,
+    "sha256": "df79188aee252054028de75f13215a758fb7bab4d37ed7e8fb072d55826484f3"
+  },
+  {
+    "path": "public/models/iwefaa2/iwefaa2scaled3.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/iwefaa2/iwefaa2scaled3.jpg",
+    "bytes": 2286891,
+    "sha256": "5930e03d2bf646dc188c0fb997e9b42cc355ea51cc5ebb321f559fd3e6ddc9c0"
+  },
+  {
+    "path": "data/sources/anonymous1.html",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/anonymous1/",
+    "bytes": 39659,
+    "sha256": "3412bb05dfa0850d369d1ec56c5e6b6b822cebbb92990bd981775facff32aa06"
+  },
+  {
+    "path": "public/models/anonymous1/UCB_LOW_fix.obj",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/anonymous1/UCB_LOW_fix.obj",
+    "bytes": 2531865,
+    "sha256": "530b45b019757d8fb7c91318bf32abf6b6b6680bc5034524c301f8afed7e53cb"
+  },
+  {
+    "path": "public/models/anonymous1/UCB_LOW_fix.mtl",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/anonymous1/UCB_LOW_fix.mtl",
+    "bytes": 274,
+    "sha256": "c490415a33d404d9b82bd31bd123d031f5ce88f1b2ca4b8637beec11b182b463"
+  },
+  {
+    "path": "public/models/anonymous1/UCB_LOW_fix_u1_v1.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/anonymous1/UCB_LOW_fix_u1_v1.jpg",
+    "bytes": 1495866,
+    "sha256": "91ba11ac7df587fbe58a96c35dd70e2c0f86fa1daf4578ff51ff8954db39de46"
+  },
+  {
+    "path": "data/sources/amenirdis.html",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/amenirdis/",
+    "bytes": 8493,
+    "sha256": "495936bc46bc79b1ab0325b025d52d509e87dfbf261377ff16175381dfc2e728"
+  },
+  {
+    "path": "public/models/amenirdis/amenirdis_lowpoly.obj",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/amenirdis/amenirdis_lowpoly.obj",
+    "bytes": 2002545,
+    "sha256": "427d2215062230679b5a83c6f0e4ac9b7ba05e773062a41d596488ff34bd1c21"
+  },
+  {
+    "path": "public/models/amenirdis/amenirdis_lowpoly.mtl",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/amenirdis/amenirdis_lowpoly.mtl",
+    "bytes": 1133,
+    "sha256": "da4fa0acbf4afb04c58d0ab7b414a3be83651ff0871a4e1c5157f5f2507b16c2"
+  },
+  {
+    "path": "public/models/amenirdis/amenirdis_lowpoly.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/amenirdis/amenirdis_lowpoly.jpg",
+    "bytes": 805509,
+    "sha256": "33ea01b66b6a1d6945aab0b0e628cb9090c1024d5b8d2b5ff4ef45e6e0fd053c"
+  },
+  {
+    "path": "public/models/amenirdis/amenirdis_lowpoly1.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/amenirdis/amenirdis_lowpoly1.jpg",
+    "bytes": 1792133,
+    "sha256": "2efde9aaca0e07933e566930b8eb37be2deee91e86bf12d4db31bb991ef0896a"
+  },
+  {
+    "path": "public/models/amenirdis/amenirdis_lowpoly2.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/amenirdis/amenirdis_lowpoly2.jpg",
+    "bytes": 1465917,
+    "sha256": "79417ffa05b7dd892e2ab2c81f05b253da51ae8671aca96a6df28f225e56a9cd"
+  },
+  {
+    "path": "public/models/amenirdis/amenirdis_lowpoly3.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/amenirdis/amenirdis_lowpoly3.jpg",
+    "bytes": 2330026,
+    "sha256": "382de8c4e709ca01096ab8ab9d46d91841a6fe8b9e29eb0cd2162ec683bdba6d"
+  },
+  {
+    "path": "data/sources/psamtik.html",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtik/",
+    "bytes": 207874,
+    "sha256": "4428d88df726b5c4d565692ce8a2e97673c3fffaa1cfa74170a3856516e4d33f"
+  },
+  {
+    "path": "public/models/psamtik/doctor-scaled.obj",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtik/doctor-scaled.obj",
+    "bytes": 3281235,
+    "sha256": "24b5ab693e94fd6bab05d56ab140e4eeb6aca222f81cc471b1fd97f35b99e0e7"
+  },
+  {
+    "path": "public/models/psamtik/doctor-scaled.mtl",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtik/doctor-scaled.mtl",
+    "bytes": 893,
+    "sha256": "18dbe7d2de00fccf9b23d27da5efa55e893594af713883020112c367e0d0f55e"
+  },
+  {
+    "path": "public/models/psamtik/doctor-scaled.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtik/doctor-scaled.jpg",
+    "bytes": 4219499,
+    "sha256": "01acacad63549f09c5d244eaa0f28d2ed5c2075cd4d1345098e7f4e819678839"
+  },
+  {
+    "path": "public/models/psamtik/doctor-scaled1.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtik/doctor-scaled1.jpg",
+    "bytes": 3925185,
+    "sha256": "dde8abcaadb5d687ac6d5f06dded2c7bd41f34ba536fba078904a1b10aadf12b"
+  },
+  {
+    "path": "public/models/psamtik/doctor-scaled2.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtik/doctor-scaled2.jpg",
+    "bytes": 4144578,
+    "sha256": "5af157a32d4766efabab97b41efaf9283fc0e81b386ef4a199cb1f9e8b58b71d"
+  },
+  {
+    "path": "public/models/psamtik/doctor-scaled3.jpg",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtik/doctor-scaled3.jpg",
+    "bytes": 3369151,
+    "sha256": "719ae88c0ee146965f1221066f5248e6206770b9d30595bfdedd8da05de88b5e"
+  },
+  {
+    "path": "public/vendor/nederhof/reslite.js",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtik/reslite.js",
+    "bytes": 20615,
+    "sha256": "db4f4f7bae290181076f6172fd53b133f7c4a2070cfac10d77af180c45c6f75a"
+  },
+  {
+    "path": "public/vendor/nederhof/NewGardiner.ttf",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtik/NewGardiner.ttf",
+    "bytes": 580584,
+    "sha256": "3391b71e93b8df0bd8ccfff97bd2ab427f1ef4aab651b2dff92a57db04053370"
+  },
+  {
+    "path": "public/vendor/nederhof/HieroglyphicAux.ttf",
+    "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/psamtik/HieroglyphicAux.ttf",
+    "bytes": 4372,
+    "sha256": "106289c76e5ba939f1f88c9f86c03399fbf902192e3a61863f63559e8e0e4211"
+  }
+]

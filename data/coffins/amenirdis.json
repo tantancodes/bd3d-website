@@ -1,0 +1,224 @@
+{
+  "slug": "amenirdis",
+  "source": "https://sites.cs.st-andrews.ac.uk/people/mn31/egyptian/coffins/amenirdis/",
+  "model": {
+    "name": "amenirdis_lowpoly",
+    "quaternion": [
+      0.4981,
+      0.5128,
+      0.4877,
+      0.5012
+    ],
+    "settings": [
+      0.4981,
+      0.5128,
+      0.4877,
+      0.5012,
+      5,
+      0,
+      0.5,
+      0.5,
+      1.5,
+      0,
+      20,
+      140,
+      0,
+      0.25,
+      0.25
+    ]
+  },
+  "areas": [
+    {
+      "id": "text:front",
+      "direction": [
+        -0.2257,
+        -0.9738,
+        0.0264
+      ],
+      "rotation": -0.5,
+      "dash": 4,
+      "textId": "text:front",
+      "lines": [
+        [
+          -0.2517,
+          0.2327,
+          -0.0336,
+          -0.2508,
+          0.2336,
+          0.0239
+        ],
+        [
+          -0.2508,
+          0.2336,
+          0.0239,
+          -0.6308,
+          0.2028,
+          0.0216
+        ],
+        [
+          -0.6308,
+          0.2028,
+          0.0216,
+          -0.6962,
+          0.2876,
+          0.0219
+        ],
+        [
+          -0.6962,
+          0.2876,
+          0.0219,
+          -0.7291,
+          0.2882,
+          0.0225
+        ],
+        [
+          -0.7291,
+          0.2882,
+          0.0225,
+          -0.7284,
+          0.2885,
+          -0.0314
+        ],
+        [
+          -0.7284,
+          0.2885,
+          -0.0314,
+          -0.6966,
+          0.2886,
+          -0.0335
+        ],
+        [
+          -0.6966,
+          0.2886,
+          -0.0335,
+          -0.633,
+          0.2065,
+          -0.0308
+        ],
+        [
+          -0.633,
+          0.2065,
+          -0.0308,
+          -0.2517,
+          0.2327,
+          -0.0336
+        ]
+      ]
+    },
+    {
+      "id": "text:amenirdis",
+      "direction": [
+        -0.2257,
+        -0.9738,
+        0.0264
+      ],
+      "rotation": -0.5,
+      "dash": 4,
+      "textId": "text:amenirdis",
+      "lines": [
+        [
+          -0.7313,
+          0.2897,
+          0.0247,
+          -0.6969,
+          0.2886,
+          0.0243
+        ],
+        [
+          -0.6969,
+          0.2886,
+          0.0243,
+          -0.6311,
+          0.203,
+          0.0234
+        ],
+        [
+          -0.6311,
+          0.203,
+          0.0234,
+          -0.5251,
+          0.2045,
+          0.0224
+        ],
+        [
+          -0.5251,
+          0.2045,
+          0.0224,
+          -0.5238,
+          0.2048,
+          -0.0327
+        ],
+        [
+          -0.5238,
+          0.2048,
+          -0.0327,
+          -0.6327,
+          0.2062,
+          -0.0306
+        ],
+        [
+          -0.6327,
+          0.2062,
+          -0.0306,
+          -0.6982,
+          0.2886,
+          -0.0349
+        ],
+        [
+          -0.6982,
+          0.2886,
+          -0.0349,
+          -0.73,
+          0.2894,
+          -0.0315
+        ],
+        [
+          -0.73,
+          0.2894,
+          -0.0315,
+          -0.7313,
+          0.2897,
+          0.0247
+        ]
+      ]
+    }
+  ],
+  "annotations": [
+    {
+      "id": "text:amenirdis",
+      "title": "amenirdis",
+      "kind": "interpretation",
+      "description": "The name literally means 'she was given by Amun'. As 'singer of the interior of Amun', Amenirdis made music in the temple of Amun in Thebes. The writing of 'Amun' is shared between the title and the name.",
+      "fragments": [],
+      "areaIds": [
+        "text:amenirdis"
+      ]
+    },
+    {
+      "id": "text:front",
+      "title": "front",
+      "kind": "inscription",
+      "description": "",
+      "fragments": [
+        {
+          "hieroglyphs": "",
+          "transliteration": "ḥtp-ḏj-nsw Wsjr",
+          "translation": "A royal offering of Osiris,"
+        },
+        {
+          "hieroglyphs": "",
+          "transliteration": "prt-r-ḫrw t ḥnqt kꜣ ꜣpd fqꜣw",
+          "translation": "a mortuary offering of bread, beer, oxen, fowl, cakes,"
+        },
+        {
+          "hieroglyphs": "",
+          "transliteration": "ḥs(t) ẖnw Jmn Jmn-jr-ḏj-s(t)",
+          "translation": "(to) the singer of the interior of Amun Amenirdis."
+        }
+      ],
+      "areaIds": [
+        "text:front"
+      ]
+    }
+  ]
+}

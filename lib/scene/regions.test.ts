@@ -82,3 +82,16 @@ describe('picking', () => {
     expect(regionCentroid(square('a', 2), identity).toArray()).toEqual([2, 0, 0]);
   });
 });
+
+describe('hover picking', () => {
+  it('finds a facing region without a mesh hit and ignores back faces', async () => {
+    const { findRegionNear } = await import('./regions');
+    const regions = [square('a')];
+    expect(findRegionNear(regions, new Vector2(0, 0), camera(5), identity, noRotation)?.id).toBe(
+      'a',
+    );
+    expect(
+      findRegionNear(regions, new Vector2(0, 0), camera(-5), identity, noRotation),
+    ).toBeUndefined();
+  });
+});

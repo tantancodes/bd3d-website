@@ -57,7 +57,6 @@ for (const slug of slugs)
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto(`/exhibits/${slug}`);
     await expect(page.locator('.model-stage')).toHaveAttribute('data-model-ready', 'true');
-    await expect(page.locator('.gallery-door').first()).toBeHidden();
     await noOverflow(page);
     await page.screenshot({ path: `test-results/${slug}-mobile.png`, fullPage: true });
     await page.getByRole('tab', { name: 'Inscriptions', exact: true }).focus();
@@ -75,9 +74,9 @@ for (const slug of slugs)
     await page.getByRole('button', { name: 'Expand model', exact: true }).click();
     await expect(page.getByRole('dialog')).toBeVisible();
     await page.keyboard.press('Shift+Tab');
-    await expect(
-      page.getByRole('button', { name: 'Hide region outlines', exact: true }),
-    ).toBeFocused();
+    await expect
+      .poll(() => page.evaluate(() => !!document.activeElement?.closest('[role=dialog]')))
+      .toBe(true);
     await page.keyboard.press('Escape');
     await expect(page.getByRole('button', { name: 'Expand model', exact: true })).toBeFocused();
     expect(

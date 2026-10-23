@@ -64,3 +64,18 @@ describe('flightStep', () => {
   it('clamps long frames so a stall does not jump', () =>
     expect(flightStep(1, false)).toBe(flightStep(0.05, false)));
 });
+
+describe('named views', () => {
+  it('places every view at the home distance looking at the centre', async () => {
+    const { VIEW_IDS, viewPose } = await import('./camera');
+    for (const id of VIEW_IDS) {
+      const pose = viewPose(id);
+      expect(pose.position.length()).toBeCloseTo(HOME_POSITION.length(), 2);
+      expect(pose.target.length()).toBe(0);
+    }
+  });
+  it('front matches the reset pose', async () => {
+    const { viewPose } = await import('./camera');
+    expect(viewPose('front').position.equals(HOME_POSITION)).toBe(true);
+  });
+});

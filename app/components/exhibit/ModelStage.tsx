@@ -1,59 +1,74 @@
 'use client';
 import dynamic from 'next/dynamic';
-import { useCallback, useRef, useState } from 'react';
-import { motion } from 'motion/react';
-import { Maximize, Minimize } from 'lucide-react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import type { Coffin } from '@/lib/collection';
 import type { CoffinData } from '@/lib/data/schema';
+import type { DisplayModelAssets, TextureTier } from '@/lib/data/display-assets';
+import {
+  QUALITY,
+  readDeviceProfile,
+  resolveQuality,
+  type QualitySetting,
+} from '@/lib/scene/quality';
 import CameraToolbar from './CameraToolbar';
-import HelpPanel from './HelpPanel';
+import InspectPanel from './InspectPanel';
+import ViewSwitcher from './ViewSwitcher';
 import type { ExhibitState } from './useExhibitState';
 import { useExpandedStage } from './useExpandedStage';
-import { useViewerShortcuts } from './useViewerShortcuts';
 
 // WebGL only runs in the browser; the reading panel renders on the server meanwhile.
 const ModelRoom = dynamic(() => import('../viewer/ModelRoom'), {
   ssr: false,
   loading: () => (
-    <div className="model-loading standalone" role="status">
-      Preparing the 3D gallery…
+    <div className="stage-status" role="status">
+      <p className="stage-status__title">Preparing the viewer…</p>
     </div>
   ),
 });
 
-const DOOR_TRANSITION = { duration: 1, ease: [0.76, 0, 0.24, 1] as const };
-
 type Props = {
   coffin: Coffin;
   data: CoffinData;
+  assets: DisplayModelAssets;
   state: ExhibitState;
   reduced: boolean;
   expanded: boolean;
   onExpandedChange: (expanded: boolean) => void;
+  inspectOpen: boolean;
+  onInspectChange: (open: boolean) => void;
+  quality: QualitySetting;
+  onQuality: (setting: QualitySetting) => void;
+  onReady: () => void;
+  modelReady: boolean;
 };
 
 export default function ModelStage({
   coffin,
   data,
+  assets,
   state,
   reduced,
   expanded,
   onExpandedChange,
+  inspectOpen,
+  onInspectChange,
+  quality,
+  onQuality,
+  onReady,
+  modelReady,
 }: Props) {
-  const [help, setHelp] = useState(false);
-  const [modelReady, setModelReady] = useState(false);
-  const onModelReady = useCallback(() => setModelReady(true), []);
+  const [maxTextureSize, setMaxTextureSize] = useState<number | null>(null);
+  const [shownTier, setShownTier] = useState<TextureTier | null>(null);
   const stage = useRef<HTMLElement>(null);
   const expandButton = useRef<HTMLButtonElement>(null);
-
   useExpandedStage(expanded, stage, expandButton);
-  useViewerShortcuts({
-    onEscape: () => {
-      onExpandedChange(false);
-      setHelp(false);
-    },
-    onReset: () => state.sendCamera('reset'),
-  });
+
+  const resolved = useMemo(
+    () => (maxTextureSize ? resolveQuality(quality, readDeviceProfile(maxTextureSize)) : null),
+    [quality, maxTextureSize],
+  );
+  const profile = resolved ? QUALITY[resolved] : null;
+  const onCapabilities = useCallback((size: number) => setMaxTextureSize(size), []);
 
   return (
     <section
@@ -62,59 +77,66 @@ export default function ModelStage({
       aria-modal={expanded || undefined}
       className="model-stage"
       data-model-ready={modelReady}
+      data-texture-tier={shownTier ?? ''}
       aria-label={`Interactive 3D model of ${coffin.name}`}
     >
-      <div className="stage-top">
-        <span>
-          <span className="status-dot" /> THE OBJECT IN THREE DIMENSIONS
-        </span>
-        <button
-          ref={expandButton}
-          onClick={() => onExpandedChange(!expanded)}
-          aria-label={expanded ? 'Show reading panel' : 'Expand model'}
-        >
-          {expanded ? <Minimize size={18} /> : <Maximize size={18} />}
-        </button>
-      </div>
       <ModelRoom
+        assets={assets}
+        targetTier={profile?.textures ?? null}
+        maxDpr={profile?.maxDpr ?? 1.5}
+        onReady={onReady}
+        onTierChange={setShownTier}
+        onCapabilities={onCapabilities}
         data={data}
-        regions={state.regions}
-        selected={state.selected}
+        pickable={state.pickable}
+        outlined={state.outlined}
+        states={state.regionStates}
+        showRegions={state.showRegions}
+        labelFor={state.labelFor}
         focusSerial={state.focusSerial}
-        onSelect={state.selectRegion}
         command={state.command}
         reduced={reduced}
-        showRegions={state.showRegions}
-        onReady={onModelReady}
+        lighting={state.lighting}
+        anisotropy={profile?.anisotropy ?? 4}
+        shadows={resolved !== null && resolved !== 'low'}
+        onSelect={state.selectRegion}
+        onHover={state.hoverRegion}
       />
-      <div className="stage-bottom">
-        <p>
-          Drag to rotate · Scroll to zoom
-          <br />
-          <span>Select an outlined region to read its story</span>
-        </p>
-        <button onClick={() => setHelp(!help)} aria-expanded={help} aria-label="Viewer help">
-          ?
-        </button>
+
+      <p className="stage-chip stage-chip--meta">
+        {data.areas.length} regions · {data.annotations.length} entries
+      </p>
+      <div className="stage-views">
+        <ViewSwitcher active={state.view} onView={(view) => state.sendCamera(`view:${view}`)} />
       </div>
-      <CameraToolbar
-        onCamera={state.sendCamera}
-        showRegions={state.showRegions}
-        onToggleRegions={state.toggleRegions}
-      />
-      {help && <HelpPanel onClose={() => setHelp(false)} />}
-      <motion.div
-        className="gallery-door door-left"
-        initial={reduced ? false : { x: 0 }}
-        animate={{ x: '-100%' }}
-        transition={DOOR_TRANSITION}
-      />
-      <motion.div
-        className="gallery-door door-right"
-        initial={reduced ? false : { x: 0 }}
-        animate={{ x: '100%' }}
-        transition={DOOR_TRANSITION}
-      />
+
+      {inspectOpen && (
+        <InspectPanel
+          lighting={state.lighting}
+          onLighting={state.setLighting}
+          quality={quality}
+          resolved={resolved}
+          shownTier={shownTier}
+          onQuality={onQuality}
+          onClose={() => onInspectChange(false)}
+        />
+      )}
+
+      <div className="stage-bottom">
+        <CameraToolbar
+          onCamera={state.sendCamera}
+          showRegions={state.showRegions}
+          onToggleRegions={state.toggleRegions}
+          inspectOpen={inspectOpen}
+          onToggleInspect={() => onInspectChange(!inspectOpen)}
+          expanded={expanded}
+          onToggleExpanded={() => onExpandedChange(!expanded)}
+          expandRef={expandButton}
+        />
+      </div>
+      <p className="stage-hint" aria-hidden="true">
+        Drag to orbit · Scroll to zoom · <kbd>?</kbd> shortcuts
+      </p>
     </section>
   );
 }

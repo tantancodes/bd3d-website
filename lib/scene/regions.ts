@@ -93,3 +93,21 @@ export function regionCentroid(region: Region, matrix: Matrix4): Vector3 {
     .divideScalar(region.lines.length)
     .applyMatrix4(matrix);
 }
+
+/**
+ * Region under the pointer for hover feedback, without a mesh raycast: facing is judged at
+ * the region centroid. Clicks still use the exact mesh hit (`findRegionAt`).
+ */
+export function findRegionNear(
+  regions: Region[],
+  pointer: Vector2,
+  camera: Camera,
+  matrix: Matrix4,
+  orientation: Quaternion,
+): Region | undefined {
+  return regions.find(
+    (region) =>
+      facesCamera(region, orientation, camera.position, regionCentroid(region, matrix)) &&
+      containsProjectedPoint(region, pointer, matrix, camera),
+  );
+}

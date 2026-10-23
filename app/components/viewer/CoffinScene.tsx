@@ -1,57 +1,86 @@
 'use client';
 import { useEffect, useMemo, useRef } from 'react';
-import { useLoader, useThree, type ThreeEvent } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
+import { ContactShadows, Html, OrbitControls } from '@react-three/drei';
+import { Box3, Sphere, Vector2, type Group, type Mesh, type MeshStandardMaterial } from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import type { CoffinData, Region } from '@/lib/data/schema';
-import { CoffinLoader } from '@/lib/scene/loader';
 import { prepareDisplayModel } from '@/lib/scene/orientation';
-import { findRegionAt } from '@/lib/scene/regions';
+import { findRegionAt, findRegionNear, regionCentroid } from '@/lib/scene/regions';
 import { MAX_DISTANCE, MIN_DISTANCE, type CameraCommand } from '@/lib/scene/camera';
-import RegionOverlay from './RegionOverlay';
+import type { LightingMode } from '@/lib/scene/lighting';
+import RegionOverlay, { type RegionStates } from './RegionOverlay';
+import StageLighting from './StageLighting';
 import { useCameraFlight } from './useCameraFlight';
 
 export type SceneProps = {
   data: CoffinData;
-  /** Regions that can be picked and are outlined (already filtered by the reading panel). */
-  regions: Region[];
-  selected: string | null;
-  /** Incremented to re-frame the selected region even when the selection is unchanged. */
+  /** Regions that respond to hover and click (filtered by the reading panel). */
+  pickable: Region[];
+  /** Regions to outline: pickable ones plus any highlighted elsewhere. */
+  outlined: Region[];
+  states: RegionStates;
+  showRegions: boolean;
+  /** Text shown next to the hovered region. */
+  labelFor: (regionId: string) => string | undefined;
   focusSerial: number;
-  onSelect: (regionId: string) => void;
   command: CameraCommand;
   reduced: boolean;
-  showRegions: boolean;
-  onReady: () => void;
+  lighting: LightingMode;
+  anisotropy: number;
+  shadows: boolean;
+  onSelect: (regionId: string) => void;
+  onHover: (regionId: string | null) => void;
 };
 
 /** Pointer travel (px) beyond which a click is treated as the end of a drag. */
 const CLICK_TOLERANCE = 5;
 
-export function modelUrl(data: CoffinData) {
-  return `/models/${data.slug}/${data.model.name}`;
-}
-
 export default function CoffinScene({
+  object,
+  version,
   data,
-  regions,
-  selected,
+  pickable,
+  outlined,
+  states,
+  showRegions,
+  labelFor,
   focusSerial,
-  onSelect,
   command,
   reduced,
-  showRegions,
-  onReady,
-}: SceneProps) {
-  const object = useLoader(CoffinLoader, modelUrl(data));
-  useEffect(() => {
-    onReady();
-  }, [onReady]);
-
+  lighting,
+  anisotropy,
+  shadows,
+  onSelect,
+  onHover,
+}: SceneProps & { object: Group; version: number }) {
+  const { camera, gl, invalidate } = useThree();
   const display = useMemo(() => prepareDisplayModel(object, data.model), [object, data.model]);
+  const bounds = useMemo(() => {
+    const box = new Box3().setFromObject(display.scene);
+    return { floor: box.min.y, radius: box.getBoundingSphere(new Sphere()).radius };
+  }, [display]);
+
+  // Texture filtering and shadow flags, re-applied when textures change tier.
+  useEffect(() => {
+    const max = gl.capabilities.getMaxAnisotropy();
+    display.scene.traverse((child) => {
+      const mesh = child as Mesh;
+      if (!mesh.isMesh) return;
+      mesh.castShadow = shadows;
+      mesh.receiveShadow = shadows;
+      for (const material of [mesh.material].flat() as MeshStandardMaterial[]) {
+        if (material.map) {
+          material.map.anisotropy = Math.min(anisotropy, max);
+          material.map.needsUpdate = true;
+        }
+      }
+    });
+    invalidate();
+  }, [display, version, anisotropy, shadows, gl, invalidate]);
+
   const controls = useRef<OrbitControlsImpl>(null);
-  const { camera } = useThree();
-  const focus = data.areas.find((region) => region.id === selected);
+  const focus = data.areas.find((region) => region.id === states.selected);
   const flight = useCameraFlight({
     controls,
     display,
@@ -61,10 +90,57 @@ export default function CoffinScene({
     reducedMotion: reduced,
   });
 
+  // Hover without raycasting the mesh on every pointer move: project region polygons.
+  const latest = useRef({ pickable, onHover, showRegions });
+  useEffect(() => {
+    latest.current = { pickable, onHover, showRegions };
+  });
+  useEffect(() => {
+    const element = gl.domElement;
+    let frame = 0;
+    let current: string | null = null;
+    const report = (id: string | null) => {
+      if (id === current) return;
+      current = id;
+      element.style.cursor = id ? 'pointer' : '';
+      latest.current.onHover(id);
+    };
+    const move = (event: PointerEvent) => {
+      if (event.buttons !== 0 || !latest.current.showRegions) return report(null);
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const rect = element.getBoundingClientRect();
+        const pointer = new Vector2(
+          ((event.clientX - rect.left) / rect.width) * 2 - 1,
+          -((event.clientY - rect.top) / rect.height) * 2 + 1,
+        );
+        const hit = findRegionNear(
+          latest.current.pickable,
+          pointer,
+          camera,
+          display.matrix,
+          display.orientation,
+        );
+        report(hit?.id ?? null);
+      });
+    };
+    const leave = () => {
+      cancelAnimationFrame(frame);
+      report(null);
+    };
+    element.addEventListener('pointermove', move);
+    element.addEventListener('pointerleave', leave);
+    return () => {
+      cancelAnimationFrame(frame);
+      element.removeEventListener('pointermove', move);
+      element.removeEventListener('pointerleave', leave);
+    };
+  }, [gl, camera, display]);
+
   function pick(event: ThreeEvent<MouseEvent>) {
     if (event.delta > CLICK_TOLERANCE || !showRegions) return;
     const match = findRegionAt(
-      regions,
+      pickable,
       event.pointer,
       event.point,
       camera,
@@ -77,24 +153,67 @@ export default function CoffinScene({
     }
   }
 
+  // Redraw when overlay state changes (rendering is on demand).
+  useEffect(() => {
+    invalidate();
+  }, [states, showRegions, outlined, lighting, invalidate]);
+
+  // Renderer statistics for tests and benchmarks: totals for the previous frame, including
+  // shadow passes. (Default priority: a positive priority would disable automatic rendering.)
+  useEffect(() => {
+    // The renderer is a mutable three.js object; info counters are configured on it.
+    // eslint-disable-next-line react-hooks/immutability
+    gl.info.autoReset = false;
+    return () => {
+      gl.info.autoReset = true;
+    };
+  }, [gl]);
+  useFrame(({ gl: renderer }) => {
+    renderer.domElement.dataset.drawCalls = String(renderer.info.render.calls);
+    renderer.domElement.dataset.triangles = String(renderer.info.render.triangles);
+    renderer.domElement.dataset.textures = String(renderer.info.memory.textures);
+    renderer.info.reset();
+  });
+
+  const hoverRegion = states.hovered ? data.areas.find((r) => r.id === states.hovered) : undefined;
+  const hoverLabel = hoverRegion && labelFor(hoverRegion.id);
+
   return (
     <>
-      <ambientLight intensity={1.6} />
-      <directionalLight position={[3, 5, 6]} intensity={2} />
-      <directionalLight position={[-4, 0, 2]} intensity={0.5} />
+      <StageLighting mode={lighting} radius={bounds.radius} shadows={shadows} />
       <primitive object={display.scene} onClick={pick} dispose={null} />
-      {showRegions && (
-        <RegionOverlay
-          regions={regions}
-          selected={selected}
-          matrix={display.matrix}
-          orientation={display.orientation}
-        />
+      <ContactShadows
+        position={[0, bounds.floor - 0.02, 0]}
+        scale={bounds.radius * 3.2}
+        far={bounds.radius * 1.2}
+        blur={2.6}
+        opacity={0.6}
+        resolution={512}
+        frames={1}
+        color="#000000"
+      />
+      <RegionOverlay
+        regions={outlined}
+        states={states}
+        matrix={display.matrix}
+        orientation={display.orientation}
+        showIdle={showRegions}
+      />
+      {hoverRegion && hoverLabel && (
+        <Html
+          position={regionCentroid(hoverRegion, display.matrix)}
+          className="region-label"
+          zIndexRange={[20, 10]}
+          pointerEvents="none"
+        >
+          <span>{hoverLabel}</span>
+        </Html>
       )}
       <OrbitControls
         ref={controls}
         makeDefault
         enableDamping
+        dampingFactor={0.09}
         minDistance={MIN_DISTANCE}
         maxDistance={MAX_DISTANCE}
         onStart={flight.cancel}

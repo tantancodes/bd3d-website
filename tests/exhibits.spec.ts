@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { surfaceTarget } from './surface-points';
+
+const HOME = '0.0000,0.0000,8.2000';
 const slugs = ['psamtikseneb', 'irethoreru', 'iwefaa2', 'anonymous1', 'amenirdis', 'psamtik'];
 for (const slug of slugs) {
   test(`${slug}: assets, layers, camera, annotations and repeat locations`, async ({ page }) => {
@@ -32,12 +34,12 @@ for (const slug of slugs) {
       'true',
     );
     await page.getByRole('button', { name: 'Reset view', exact: true }).click();
-    await expect(canvas).toHaveAttribute('data-camera', '0.0000,0.0000,7.3000');
+    await expect(canvas).toHaveAttribute('data-camera', HOME);
     const first = page.locator('.annotation-title').first();
     await first.click();
     await expect(first).toHaveAttribute('aria-pressed', 'true');
     await expect(page.getByText(/Location 1 of/)).toBeVisible();
-    await expect(canvas).not.toHaveAttribute('data-camera', '0.0000,0.0000,7.3000');
+    await expect(canvas).not.toHaveAttribute('data-camera', HOME);
     const beforeZoom = await canvas.getAttribute('data-camera');
     await page.getByRole('button', { name: 'Zoom in', exact: true }).click();
     await expect(canvas).not.toHaveAttribute('data-camera', beforeZoom!);
@@ -45,7 +47,7 @@ for (const slug of slugs) {
     await page.getByRole('button', { name: 'Rotate right', exact: true }).click();
     await page.getByRole('button', { name: 'Reset view', exact: true }).click();
     await expect(page.locator('.annotation.selected')).toHaveCount(0);
-    await expect(canvas).toHaveAttribute('data-camera', '0.0000,0.0000,7.3000');
+    await expect(canvas).toHaveAttribute('data-camera', HOME);
     await canvas.hover();
     await page.mouse.move(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
     await page.mouse.down();
@@ -53,7 +55,7 @@ for (const slug of slugs) {
       steps: 8,
     });
     await page.mouse.up();
-    await expect(canvas).not.toHaveAttribute('data-camera', '0.0000,0.0000,7.3000');
+    await expect(canvas).not.toHaveAttribute('data-camera', HOME);
     for (const layer of ['Translation', 'Transliteration', 'Hieroglyphs', 'All layers']) {
       await page.getByRole('combobox', { name: 'Visible linguistic layer' }).selectOption(layer);
       await expect(page.locator('.translation').first()).toBeVisible({
@@ -98,18 +100,18 @@ for (const slug of slugs) {
 }
 for (const slug of slugs) {
   test(`${slug}: geometry failure preserves reading and retries successfully`, async ({ page }) => {
-    await page.route(`**/models/${slug}/*.obj`, (r) => r.abort());
+    await page.route(`**/models/${slug}/display/*.glb`, (r) => r.abort());
     await page.goto(`/exhibits/${slug}`);
     await expect(page.getByText('The model could not load.')).toBeVisible();
     await expect(page.locator('.translation').first()).toBeVisible();
-    await page.unroute(`**/models/${slug}/*.obj`);
+    await page.unroute(`**/models/${slug}/display/*.glb`);
     await page.getByRole('button', { name: 'Try again', exact: true }).click();
     await expect(page.locator('.model-stage')).toHaveAttribute('data-model-ready', 'true');
   });
   test(`${slug}: texture failure is reported instead of silently showing an untextured object`, async ({
     page,
   }) => {
-    await page.route(`**/models/${slug}/*.jpg`, (r) => r.abort());
+    await page.route(`**/models/${slug}/display/*-1024.webp`, (r) => r.abort());
     await page.goto(`/exhibits/${slug}`);
     await expect(page.getByText('The model could not load.')).toBeVisible();
   });
@@ -118,7 +120,7 @@ for (const slug of slugs) {
     const gate = new Promise<void>((resolve) => {
       release = resolve;
     });
-    await page.route(`**/models/${slug}/*.obj`, async (r) => {
+    await page.route(`**/models/${slug}/display/*.glb`, async (r) => {
       await gate;
       await r.continue();
     });

@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { Box3, Matrix4, PerspectiveCamera, Quaternion, Raycaster, Vector2, Vector3 } from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import type { CoffinData } from '../lib/data/schema';
+import { CAMERA_FOV, HOME_POSITION } from '../lib/scene/camera';
 /** Independent test projection from the imported source mesh and source polygon vertices. */
 export function surfaceTarget(slug: string, width: number, height: number) {
   const data: CoffinData = JSON.parse(readFileSync(`data/coffins/${slug}.json`, 'utf8'));
@@ -25,8 +26,8 @@ export function surfaceTarget(slug: string, width: number, height: number) {
   object.scale.setScalar(scale);
   object.updateMatrixWorld(true);
   const transform = new Matrix4().compose(object.position, rotation, object.scale);
-  const camera = new PerspectiveCamera(38, width / height, 0.1, 1000);
-  camera.position.set(0, 0, 7.3);
+  const camera = new PerspectiveCamera(CAMERA_FOV, width / height, 0.1, 1000);
+  camera.position.copy(HOME_POSITION);
   camera.lookAt(0, 0, 0);
   camera.updateMatrixWorld(true);
   const inscriptions = new Set(

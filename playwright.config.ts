@@ -15,6 +15,9 @@ export default defineConfig({
   expect: { timeout: expectTimeout },
   fullyParallel: false,
   workers: 1,
+  // Software WebGL on shared CI runners is slow and variable; one retry separates timing
+  // flakes (reported as "flaky") from real failures.
+  retries: process.env.CI ? 1 : 0,
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:3101',
     channel: channel || undefined,
@@ -25,5 +28,8 @@ export default defineConfig({
       ? { args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] }
       : undefined,
   },
-  reporter: [['list'], ['html', { open: 'never' }]],
+  // On GitHub Actions, failures also become annotations on the commit.
+  reporter: process.env.CI
+    ? [['github'], ['list'], ['html', { open: 'never' }]]
+    : [['list'], ['html', { open: 'never' }]],
 });

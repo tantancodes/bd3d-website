@@ -1,4 +1,4 @@
-import { getCoffinData } from '@/lib/coffin-data';
+import { getCoffinData } from '@/lib/data/load';
 export async function GET(_request: Request, { params }: { params: Promise<{ slug: string }> }) {
   const data = await getCoffinData((await params).slug);
   if (!data) return Response.json({ error: 'Exhibit not found' }, { status: 404 });

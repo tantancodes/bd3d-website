@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { Box3, Matrix4, PerspectiveCamera, Quaternion, Raycaster, Vector2, Vector3 } from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
-import type { CoffinData } from '../lib/collection';
+import type { CoffinData } from '../lib/data/schema';
 /** Independent test projection from the imported source mesh and source polygon vertices. */
 export function surfaceTarget(slug: string, width: number, height: number) {
   const data: CoffinData = JSON.parse(readFileSync(`data/coffins/${slug}.json`, 'utf8'));

@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { collection, getCoffin } from '@/lib/collection';
-import { getCoffinData } from '@/lib/coffin-data';
-import Exhibit from '@/app/components/Exhibit';
+import { getCoffinData } from '@/lib/data/load';
+import Exhibit from '@/app/components/exhibit/Exhibit';
 export function generateStaticParams() {
   return collection.map(({ slug }) => ({ slug }));
 }

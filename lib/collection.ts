@@ -10,7 +10,11 @@ export type Coffin = {
   description: string;
   source: string;
   color: string;
+  /** Annotators credited by the source edition, in the edition's order. */
+  annotators: string[];
 };
+
+const editionCredits = ['Rita Lucarelli', 'Kea Johnston', 'Mark-Jan Nederhof'];
 export const collection: Coffin[] = [
   {
     slug: 'psamtikseneb',
@@ -25,6 +29,7 @@ export const collection: Coffin[] = [
       'Follow the inscriptions from the central columns to the sides of the coffin. Text, image, and the protection of the gods come together on its surface.',
     source: 'chrysler-museum-art-712254',
     color: '#d8c9b6',
+    annotators: ['Rita Lucarelli', 'Kea Johnston', 'Matthew Whealton', 'Mark-Jan Nederhof'],
   },
   {
     slug: 'irethoreru',
@@ -39,6 +44,7 @@ export const collection: Coffin[] = [
       'Explore Book of the Dead spell 72 and Pyramid Text 368 across the coffin’s inscribed columns. The original viewer uses the spelling Irethoreru.',
     source: 'fine-arts-museums-san-francisco-20022a-b',
     color: '#c5c6ba',
+    annotators: editionCredits,
   },
   {
     slug: 'iwefaa2',
@@ -53,6 +59,7 @@ export const collection: Coffin[] = [
       'A painted vignette and two lines of inscription connect image and text. Read passages combining Book of the Dead spells 51 and 52.',
     source: 'pahma-6-19912',
     color: '#d0b8a5',
+    annotators: editionCredits,
   },
   {
     slug: 'anonymous1',
@@ -67,6 +74,7 @@ export const collection: Coffin[] = [
       'Move around the coffin to discover inscriptions on the head, legs, basin, and feet. The source edition is a work in progress; the owner remains unidentified.',
     source: 'pahma-6-19927',
     color: '#bfc8c3',
+    annotators: editionCredits,
   },
   {
     slug: 'amenirdis',
@@ -81,6 +89,7 @@ export const collection: Coffin[] = [
       'Read the offering formula down the central inscription, ending with the owner’s title and name. Its linked region encompasses the full inscription strip.',
     source: 'pahma-5-1404c',
     color: '#cfbfac',
+    annotators: editionCredits,
   },
   {
     slug: 'psamtik',
@@ -95,34 +104,13 @@ export const collection: Coffin[] = [
       'This monumental sarcophagus lid belonged to a chief physician. Explore protective texts across its front, sides, and feet, and locate repeated words on the stone.',
     source: 'pahma-5-522',
     color: '#babbb4',
+    annotators: editionCredits,
   },
 ];
 export const getCoffin = (slug: string) => collection.find((coffin) => coffin.slug === slug);
-export type Region = {
-  id: string;
-  textId: string;
-  direction: [number, number, number];
-  rotation: number;
-  lines: number[][];
-};
-export type Fragment = {
-  hieroglyphs: string;
-  hieroglyphUnicode?: string;
-  transliteration: string;
-  translation: string;
-};
-export type Inscription = {
-  id: string;
-  title: string;
-  kind: 'inscription' | 'interpretation' | 'vocabulary';
-  description: string;
-  fragments: Fragment[];
-  areaIds: string[];
-};
-export type CoffinData = {
-  slug: string;
-  source: string;
-  model: { name: string; quaternion: [number, number, number, number]; settings: number[] };
-  areas: Region[];
-  annotations: Inscription[];
-};
+
+/** "A, B & C" — the credit line format used in the reading panel. */
+export function formatCredits(names: string[]): string {
+  if (names.length < 2) return names.join('');
+  return `${names.slice(0, -1).join(', ')} & ${names[names.length - 1]}`;
+}

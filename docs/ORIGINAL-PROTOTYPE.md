@@ -36,6 +36,7 @@ PostgreSQL / Supabase → Next.js Server Components → React → 3D annotations
 ## Tech Stack
 
 **Frontend**
+
 - Next.js
 - React
 - TypeScript
@@ -44,17 +45,20 @@ PostgreSQL / Supabase → Next.js Server Components → React → 3D annotations
 - Motion
 
 **3D**
+
 - Three.js
 - React Three Fiber
 - Drei
 - GLTF / GLB
 
 **Backend & Data**
+
 - Supabase
 - PostgreSQL
 - Row Level Security
 
 **Deployment**
+
 - Vercel
 - Git / GitHub
 
@@ -87,3 +91,4 @@ Clone the repository and install dependencies:
 ```bash
 npm install
 npm run dev
+```

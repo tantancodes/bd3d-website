@@ -1,6 +1,29 @@
 import { defineConfig } from '@playwright/test';
+
+// Locally the suite uses the installed Google Chrome. CI (and machines without Chrome)
+// set PLAYWRIGHT_CHANNEL="" to use Playwright's bundled Chromium.
+const channel = process.env.PLAYWRIGHT_CHANNEL ?? 'chrome';
+
+// Model readiness depends on the GPU. Software-rendered WebGL (CI, headless servers)
+// measured 2.8–8.7 s per exhibit, so CI raises the assertion timeout via this variable.
+const expectTimeout = Number(process.env.PLAYWRIGHT_EXPECT_TIMEOUT ?? 5000);
+
 export default defineConfig({
- testDir:'./tests', timeout:60000, fullyParallel:false, workers:1,
- use:{baseURL:process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:3101',channel:'chrome',viewport:{width:1440,height:1000},screenshot:'only-on-failure',trace:'retain-on-failure'},
- reporter:[['list'],['html',{open:'never'}]],
+  testDir: './tests',
+  testMatch: '**/*.spec.ts',
+  timeout: Math.max(60000, expectTimeout * 4),
+  expect: { timeout: expectTimeout },
+  fullyParallel: false,
+  workers: 1,
+  use: {
+    baseURL: process.env.PLAYWRIGHT_BASE_URL || 'http://127.0.0.1:3101',
+    channel: channel || undefined,
+    viewport: { width: 1440, height: 1000 },
+    screenshot: 'only-on-failure',
+    trace: 'retain-on-failure',
+    launchOptions: process.env.PLAYWRIGHT_SOFTWARE_GL
+      ? { args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] }
+      : undefined,
+  },
+  reporter: [['list'], ['html', { open: 'never' }]],
 });

@@ -1,0 +1,10 @@
+# Research data and vendored source are preserved byte-for-byte.
+data/
+public/vendor/
+docs/metrics/
+package-lock.json
+.next/
+node_modules/
+playwright-report/
+test-results/
+coverage/

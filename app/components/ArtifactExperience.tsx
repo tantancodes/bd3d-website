@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { BookOpen, Languages, MousePointer2, Rotate3D } from "lucide-react";
+import { useState } from 'react';
+import { BookOpen, Languages, MousePointer2, Rotate3D } from 'lucide-react';
 
 import {
   Sheet,
@@ -9,12 +9,12 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet";
+} from '@/components/ui/sheet';
 
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
+import { Badge } from '@/components/ui/badge';
+import { Separator } from '@/components/ui/separator';
 
-import CoffinViewer from "./CoffinViewer";
+import CoffinViewer from './CoffinViewer';
 
 export type Annotation = {
   id: number;
@@ -32,11 +32,8 @@ type ArtifactExperienceProps = {
   annotations: Annotation[];
 };
 
-export default function ArtifactExperience({
-  annotations,
-}: ArtifactExperienceProps) {
-  const [selectedAnnotation, setSelectedAnnotation] =
-    useState<Annotation | null>(null);
+export default function ArtifactExperience({ annotations }: ArtifactExperienceProps) {
+  const [selectedAnnotation, setSelectedAnnotation] = useState<Annotation | null>(null);
 
   return (
     <>
@@ -48,10 +45,7 @@ export default function ArtifactExperience({
         />
 
         <div className="pointer-events-none absolute left-4 top-4 flex items-center gap-2 md:left-6 md:top-6">
-          <Badge
-            variant="secondary"
-            className="bg-background/80 backdrop-blur-md"
-          >
+          <Badge variant="secondary" className="bg-background/80 backdrop-blur-md">
             3D Viewer
           </Badge>
         </div>
@@ -85,10 +79,7 @@ export default function ArtifactExperience({
           }
         }}
       >
-        <SheetContent
-          side="right"
-          className="w-full overflow-y-auto p-0 sm:max-w-md"
-        >
+        <SheetContent side="right" className="w-full overflow-y-auto p-0 sm:max-w-md">
           {selectedAnnotation && (
             <>
               <div className="px-6 pb-6 pt-10">
@@ -117,8 +108,7 @@ export default function ArtifactExperience({
                   </div>
 
                   <p className="text-sm leading-7">
-                    {selectedAnnotation.translation ??
-                      "No translation available."}
+                    {selectedAnnotation.translation ?? 'No translation available.'}
                   </p>
                 </section>
 
@@ -129,8 +119,7 @@ export default function ArtifactExperience({
                   </div>
 
                   <p className="text-sm italic leading-7 text-muted-foreground">
-                    {selectedAnnotation.transliteration ??
-                      "No transliteration available."}
+                    {selectedAnnotation.transliteration ?? 'No transliteration available.'}
                   </p>
                 </section>
 
@@ -158,20 +147,11 @@ export default function ArtifactExperience({
                   </p>
 
                   <div className="grid grid-cols-3 gap-2">
-                    <Coordinate
-                      label="X"
-                      value={selectedAnnotation.x}
-                    />
+                    <Coordinate label="X" value={selectedAnnotation.x} />
 
-                    <Coordinate
-                      label="Y"
-                      value={selectedAnnotation.y}
-                    />
+                    <Coordinate label="Y" value={selectedAnnotation.y} />
 
-                    <Coordinate
-                      label="Z"
-                      value={selectedAnnotation.z}
-                    />
+                    <Coordinate label="Z" value={selectedAnnotation.z} />
                   </div>
                 </section>
               </div>
@@ -183,22 +163,14 @@ export default function ArtifactExperience({
   );
 }
 
-function Coordinate({
-  label,
-  value,
-}: {
-  label: string;
-  value: number;
-}) {
+function Coordinate({ label, value }: { label: string; value: number }) {
   return (
     <div className="rounded-lg border bg-muted/30 p-3">
       <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
         {label}
       </p>
 
-      <p className="mt-1 font-mono text-xs">
-        {value.toFixed(3)}
-      </p>
+      <p className="mt-1 font-mono text-xs">{value.toFixed(3)}</p>
     </div>
   );
 }

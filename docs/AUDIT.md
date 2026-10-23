@@ -7,15 +7,15 @@ This document records what the codebase is today, what was measured, and which p
 
 ## 1. What exists
 
-| Area | Current state |
-|---|---|
-| Framework | Next.js 16.3 App Router, React 19.2, TypeScript (`strict: true`) |
-| Routes | `/` (static), `/research` (static), `/exhibits/[slug]` (6 SSG pages), `/api/coffins/[slug]` (dynamic JSON) |
-| 3D | three r185, React Three Fiber 9, drei 10. OBJ + MTL + JPEG textures via a custom `CoffinLoader` |
-| Data | 6 JSON files in `data/coffins/`: 314 annotation entries, 607 surface regions, 140 linguistic fragments. Imported from Nederhof's published St Andrews editions by `scripts/import-nederhof.mjs`; integrity checked by `scripts/verify-import.mjs` (SHA-256 manifest) |
-| Hieroglyphs | Nederhof's ResLite renderer (`public/vendor/nederhof/reslite.js`) drawing to canvas; Unicode + composed font for Amenirdis |
-| Tests | 36 Playwright end-to-end tests (Chrome channel). No unit tests. No CI |
-| Styling | Three systems at once: Tailwind 4 + shadcn tokens (`globals.css`), `museum.css` (23 KB on 19 lines), `exhibit.css` |
+| Area        | Current state                                                                                                                                                                                                                                                        |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework   | Next.js 16.3 App Router, React 19.2, TypeScript (`strict: true`)                                                                                                                                                                                                     |
+| Routes      | `/` (static), `/research` (static), `/exhibits/[slug]` (6 SSG pages), `/api/coffins/[slug]` (dynamic JSON)                                                                                                                                                           |
+| 3D          | three r185, React Three Fiber 9, drei 10. OBJ + MTL + JPEG textures via a custom `CoffinLoader`                                                                                                                                                                      |
+| Data        | 6 JSON files in `data/coffins/`: 314 annotation entries, 607 surface regions, 140 linguistic fragments. Imported from Nederhof's published St Andrews editions by `scripts/import-nederhof.mjs`; integrity checked by `scripts/verify-import.mjs` (SHA-256 manifest) |
+| Hieroglyphs | Nederhof's ResLite renderer (`public/vendor/nederhof/reslite.js`) drawing to canvas; Unicode + composed font for Amenirdis                                                                                                                                           |
+| Tests       | 36 Playwright end-to-end tests (Chrome channel). No unit tests. No CI                                                                                                                                                                                                |
+| Styling     | Three systems at once: Tailwind 4 + shadcn tokens (`globals.css`), `museum.css` (23 KB on 19 lines), `exhibit.css`                                                                                                                                                   |
 
 The data pipeline and provenance work are the strongest parts of the project: every region and entry traces to a source file with a checksum, and missing mappings are left empty rather than invented.
 
@@ -23,28 +23,28 @@ The data pipeline and provenance work are the strongest parts of the project: ev
 
 Environment: headless Chromium on a 2-vCPU Xeon, WebGL via SwiftShader (CPU), localhost, cache disabled. Absolute times are pessimistic compared with a real GPU; they are used to compare before and after, not as user-facing claims.
 
-| Route | Transfer | JS | Model ready |
-|---|---:|---:|---:|
-| `/` | 0.57 MB | 193 KB | — |
-| `/research` | 0.35 MB | 193 KB | — |
-| `/exhibits/psamtikseneb` | 20.25 MB | 450 KB | 8.7 s |
-| `/exhibits/irethoreru` | 15.42 MB | 450 KB | 8.2 s |
-| `/exhibits/iwefaa2` | 14.16 MB | 450 KB | 5.7 s |
-| `/exhibits/anonymous1` | 4.76 MB | 450 KB | 2.8 s |
-| `/exhibits/amenirdis` | 8.62 MB | 450 KB | 7.1 s |
-| `/exhibits/psamtik` | 19.00 MB | 450 KB | 7.7 s |
+| Route                    | Transfer |     JS | Model ready |
+| ------------------------ | -------: | -----: | ----------: |
+| `/`                      |  0.57 MB | 193 KB |           — |
+| `/research`              |  0.35 MB | 193 KB |           — |
+| `/exhibits/psamtikseneb` | 20.25 MB | 450 KB |       8.7 s |
+| `/exhibits/irethoreru`   | 15.42 MB | 450 KB |       8.2 s |
+| `/exhibits/iwefaa2`      | 14.16 MB | 450 KB |       5.7 s |
+| `/exhibits/anonymous1`   |  4.76 MB | 450 KB |       2.8 s |
+| `/exhibits/amenirdis`    |  8.62 MB | 450 KB |       7.1 s |
+| `/exhibits/psamtik`      | 19.00 MB | 450 KB |       7.7 s |
 
 Per-asset findings:
 
-| Measure | Value | Source |
-|---|---|---|
-| OBJ geometry size | 2.0–3.4 MB of text per model, served uncompressed by `next start` | network trace |
-| OBJ parse time | 114–234 ms median per model, single thread | Node, three `OBJLoader.parse`, 5 runs |
-| Textures | 21 JPEGs, every one 4096 × 4096; four per model except `anonymous1` | file inspection |
-| GPU texture memory | ≈341 MB per four-texture exhibit (RGBA8 + mipmaps) | **estimate** from dimensions |
-| Hieroglyph font | `NewGardiner.ttf` 580 KB loaded on every exhibit | network trace |
-| Mesh density | 20k–50k triangles; mean edge length 1/84 to 1/166 of the object's longest side | computed from OBJ vertices |
-| Production build | 36 s | `npm run build` |
+| Measure            | Value                                                                          | Source                                |
+| ------------------ | ------------------------------------------------------------------------------ | ------------------------------------- |
+| OBJ geometry size  | 2.0–3.4 MB of text per model, served uncompressed by `next start`              | network trace                         |
+| OBJ parse time     | 114–234 ms median per model, single thread                                     | Node, three `OBJLoader.parse`, 5 runs |
+| Textures           | 21 JPEGs, every one 4096 × 4096; four per model except `anonymous1`            | file inspection                       |
+| GPU texture memory | ≈341 MB per four-texture exhibit (RGBA8 + mipmaps)                             | **estimate** from dimensions          |
+| Hieroglyph font    | `NewGardiner.ttf` 580 KB loaded on every exhibit                               | network trace                         |
+| Mesh density       | 20k–50k triangles; mean edge length 1/84 to 1/166 of the object's longest side | computed from OBJ vertices            |
+| Production build   | 36 s                                                                           | `npm run build`                       |
 
 Baseline test run: with the suite's default 5 s assertion timeout, 19 of 36 tests fail in this environment, all at the same assertion (`data-model-ready="true"`), because model readiness takes 2.8–8.7 s on CPU rendering. See §6.
 

@@ -1,0 +1,147 @@
+{
+  "measuredAt": "2026-10-23T21:09:52.408Z",
+  "environment": "headless Chromium, SwiftShader (CPU) WebGL, localhost, cache disabled",
+  "routes": [
+    {
+      "path": "/",
+      "quality": null,
+      "loadMs": 203,
+      "totalBytes": 467877,
+      "jsBytes": 152728
+    },
+    {
+      "path": "/research",
+      "quality": null,
+      "loadMs": 140,
+      "totalBytes": 245021,
+      "jsBytes": 152728
+    },
+    {
+      "path": "/search",
+      "quality": null,
+      "loadMs": 310,
+      "totalBytes": 364705,
+      "jsBytes": 159369
+    },
+    {
+      "path": "/exhibits/psamtikseneb",
+      "quality": "standard",
+      "loadMs": 193,
+      "previewMs": 2123,
+      "previewBytes": 6432427,
+      "fullMs": 2568,
+      "totalBytes": 6432427,
+      "jsBytes": 457536
+    },
+    {
+      "path": "/exhibits/irethoreru",
+      "quality": "standard",
+      "loadMs": 253,
+      "previewMs": 2217,
+      "previewBytes": 4393530,
+      "fullMs": 2564,
+      "totalBytes": 4393530,
+      "jsBytes": 457536
+    },
+    {
+      "path": "/exhibits/iwefaa2",
+      "quality": "standard",
+      "loadMs": 231,
+      "previewMs": 8232,
+      "previewBytes": 3449115,
+      "fullMs": 8579,
+      "totalBytes": 3449115,
+      "jsBytes": 457536
+    },
+    {
+      "path": "/exhibits/anonymous1",
+      "quality": "standard",
+      "loadMs": 205,
+      "previewMs": 7410,
+      "previewBytes": 1994203,
+      "fullMs": 7522,
+      "totalBytes": 1994203,
+      "jsBytes": 457536
+    },
+    {
+      "path": "/exhibits/amenirdis",
+      "quality": "standard",
+      "loadMs": 180,
+      "previewMs": 7684,
+      "previewBytes": 2388663,
+      "fullMs": 7993,
+      "totalBytes": 2388663,
+      "jsBytes": 457536
+    },
+    {
+      "path": "/exhibits/psamtik",
+      "quality": "standard",
+      "loadMs": 205,
+      "previewMs": 1804,
+      "previewBytes": 3812836,
+      "fullMs": 2074,
+      "totalBytes": 3812836,
+      "jsBytes": 457536
+    },
+    {
+      "path": "/exhibits/psamtikseneb",
+      "quality": "high",
+      "loadMs": 198,
+      "previewMs": 1877,
+      "previewBytes": 19566294,
+      "fullMs": 12708,
+      "totalBytes": 19566294,
+      "jsBytes": 457536
+    },
+    {
+      "path": "/exhibits/irethoreru",
+      "quality": "high",
+      "loadMs": 206,
+      "previewMs": 2316,
+      "previewBytes": 14111160,
+      "fullMs": 13752,
+      "totalBytes": 14111160,
+      "jsBytes": 457536
+    },
+    {
+      "path": "/exhibits/iwefaa2",
+      "quality": "high",
+      "loadMs": 201,
+      "previewMs": 7749,
+      "previewBytes": 12370126,
+      "fullMs": 12247,
+      "totalBytes": 12370126,
+      "jsBytes": 457536
+    },
+    {
+      "path": "/exhibits/anonymous1",
+      "quality": "high",
+      "loadMs": 201,
+      "previewMs": 7589,
+      "previewBytes": 3219445,
+      "fullMs": 7866,
+      "totalBytes": 3219445,
+      "jsBytes": 457536
+    },
+    {
+      "path": "/exhibits/amenirdis",
+      "quality": "high",
+      "loadMs": 216,
+      "previewMs": 7765,
+      "previewBytes": 7861105,
+      "fullMs": 11594,
+      "totalBytes": 7861105,
+      "jsBytes": 457536
+    },
+    {
+      "path": "/exhibits/psamtik",
+      "quality": "high",
+      "loadMs": 266,
+      "previewMs": 1835,
+      "previewBytes": 17353180,
+      "fullMs": 13524,
+      "totalBytes": 17353180,
+      "jsBytes": 457536
+    }
+  ]
+}

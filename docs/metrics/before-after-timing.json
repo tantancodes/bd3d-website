@@ -1,0 +1,414 @@
+{
+  "measuredAt": "2026-10-23T22:34:53.244Z",
+  "environment": "Headless Chromium, SwiftShader (CPU) WebGL, 2 vCPU, localhost, cache disabled; median of 3 interleaved runs",
+  "exhibits": {
+    "psamtikseneb": {
+      "baseline": {
+        "firstViewMs": 4209,
+        "finalQualityMs": 4209,
+        "jsHeapBytes": 21700000,
+        "samples": [
+          {
+            "ready": 5613,
+            "full": 5613,
+            "heap": 21700000
+          },
+          {
+            "ready": 4048,
+            "full": 4048,
+            "heap": 21700000
+          },
+          {
+            "ready": 4209,
+            "full": 4209,
+            "heap": 21700000
+          }
+        ]
+      },
+      "standard": {
+        "firstViewMs": 1534,
+        "finalQualityMs": 2894,
+        "jsHeapBytes": 21700000,
+        "samples": [
+          {
+            "ready": 1795,
+            "full": 2894,
+            "heap": 16100000
+          },
+          {
+            "ready": 1534,
+            "full": 2602,
+            "heap": 27600000
+          },
+          {
+            "ready": 1217,
+            "full": 8696,
+            "heap": 21700000
+          }
+        ]
+      },
+      "high": {
+        "firstViewMs": 1384,
+        "finalQualityMs": 12957,
+        "jsHeapBytes": 21700000,
+        "samples": [
+          {
+            "ready": 1230,
+            "full": 12957,
+            "heap": 21700000
+          },
+          {
+            "ready": 1384,
+            "full": 12212,
+            "heap": 50400000
+          },
+          {
+            "ready": 1544,
+            "full": 13130,
+            "heap": 18200000
+          }
+        ]
+      }
+    },
+    "irethoreru": {
+      "baseline": {
+        "firstViewMs": 4197,
+        "finalQualityMs": 4197,
+        "jsHeapBytes": 39600000,
+        "samples": [
+          {
+            "ready": 4197,
+            "full": 4197,
+            "heap": 39600000
+          },
+          {
+            "ready": 4146,
+            "full": 4146,
+            "heap": 44700000
+          },
+          {
+            "ready": 4922,
+            "full": 4922,
+            "heap": 35100000
+          }
+        ]
+      },
+      "standard": {
+        "firstViewMs": 1804,
+        "finalQualityMs": 2444,
+        "jsHeapBytes": 19300000,
+        "samples": [
+          {
+            "ready": 1804,
+            "full": 2820,
+            "heap": 19300000
+          },
+          {
+            "ready": 1899,
+            "full": 2444,
+            "heap": 20500000
+          },
+          {
+            "ready": 1689,
+            "full": 2231,
+            "heap": 19300000
+          }
+        ]
+      },
+      "high": {
+        "firstViewMs": 1749,
+        "finalQualityMs": 12383,
+        "jsHeapBytes": 39600000,
+        "samples": [
+          {
+            "ready": 1749,
+            "full": 11728,
+            "heap": 39600000
+          },
+          {
+            "ready": 1776,
+            "full": 12383,
+            "heap": 39600000
+          },
+          {
+            "ready": 1698,
+            "full": 12521,
+            "heap": 39600000
+          }
+        ]
+      }
+    },
+    "iwefaa2": {
+      "baseline": {
+        "firstViewMs": 3778,
+        "finalQualityMs": 3778,
+        "jsHeapBytes": 21700000,
+        "samples": [
+          {
+            "ready": 3727,
+            "full": 3727,
+            "heap": 21700000
+          },
+          {
+            "ready": 3901,
+            "full": 3901,
+            "heap": 21700000
+          },
+          {
+            "ready": 3778,
+            "full": 3778,
+            "heap": 21700000
+          }
+        ]
+      },
+      "standard": {
+        "firstViewMs": 1128,
+        "finalQualityMs": 7755,
+        "jsHeapBytes": 16100000,
+        "samples": [
+          {
+            "ready": 1145,
+            "full": 7812,
+            "heap": 12700000
+          },
+          {
+            "ready": 1128,
+            "full": 7721,
+            "heap": 16100000
+          },
+          {
+            "ready": 1083,
+            "full": 7755,
+            "heap": 16100000
+          }
+        ]
+      },
+      "high": {
+        "firstViewMs": 1126,
+        "finalQualityMs": 11332,
+        "jsHeapBytes": 19300000,
+        "samples": [
+          {
+            "ready": 1126,
+            "full": 10726,
+            "heap": 11900000
+          },
+          {
+            "ready": 1072,
+            "full": 11420,
+            "heap": 21700000
+          },
+          {
+            "ready": 1140,
+            "full": 11332,
+            "heap": 19300000
+          }
+        ]
+      }
+    },
+    "anonymous1": {
+      "baseline": {
+        "firstViewMs": 1789,
+        "finalQualityMs": 1789,
+        "jsHeapBytes": 19300000,
+        "samples": [
+          {
+            "ready": 1704,
+            "full": 1704,
+            "heap": 19300000
+          },
+          {
+            "ready": 1844,
+            "full": 1844,
+            "heap": 19300000
+          },
+          {
+            "ready": 1789,
+            "full": 1789,
+            "heap": 19300000
+          }
+        ]
+      },
+      "standard": {
+        "firstViewMs": 1223,
+        "finalQualityMs": 7336,
+        "jsHeapBytes": 14300000,
+        "samples": [
+          {
+            "ready": 1327,
+            "full": 1724,
+            "heap": 20500000
+          },
+          {
+            "ready": 1223,
+            "full": 7336,
+            "heap": 13400000
+          },
+          {
+            "ready": 1198,
+            "full": 7363,
+            "heap": 14300000
+          }
+        ]
+      },
+      "high": {
+        "firstViewMs": 1179,
+        "finalQualityMs": 7489,
+        "jsHeapBytes": 16100000,
+        "samples": [
+          {
+            "ready": 1227,
+            "full": 7697,
+            "heap": 16100000
+          },
+          {
+            "ready": 1169,
+            "full": 7489,
+            "heap": 16100000
+          },
+          {
+            "ready": 1179,
+            "full": 2049,
+            "heap": 20500000
+          }
+        ]
+      }
+    },
+    "amenirdis": {
+      "baseline": {
+        "firstViewMs": 3582,
+        "finalQualityMs": 3582,
+        "jsHeapBytes": 26000000,
+        "samples": [
+          {
+            "ready": 5527,
+            "full": 5527,
+            "heap": 26000000
+          },
+          {
+            "ready": 3582,
+            "full": 3582,
+            "heap": 26000000
+          },
+          {
+            "ready": 3542,
+            "full": 3542,
+            "heap": 26000000
+          }
+        ]
+      },
+      "standard": {
+        "firstViewMs": 911,
+        "finalQualityMs": 7617,
+        "jsHeapBytes": 17100000,
+        "samples": [
+          {
+            "ready": 915,
+            "full": 7617,
+            "heap": 14300000
+          },
+          {
+            "ready": 877,
+            "full": 7360,
+            "heap": 17100000
+          },
+          {
+            "ready": 911,
+            "full": 7669,
+            "heap": 17100000
+          }
+        ]
+      },
+      "high": {
+        "firstViewMs": 857,
+        "finalQualityMs": 11169,
+        "jsHeapBytes": 17100000,
+        "samples": [
+          {
+            "ready": 857,
+            "full": 11169,
+            "heap": 12700000
+          },
+          {
+            "ready": 719,
+            "full": 10494,
+            "heap": 19300000
+          },
+          {
+            "ready": 991,
+            "full": 11298,
+            "heap": 17100000
+          }
+        ]
+      }
+    },
+    "psamtik": {
+      "baseline": {
+        "firstViewMs": 4157,
+        "finalQualityMs": 4157,
+        "jsHeapBytes": 60300000,
+        "samples": [
+          {
+            "ready": 4157,
+            "full": 4157,
+            "heap": 60300000
+          },
+          {
+            "ready": 4037,
+            "full": 4037,
+            "heap": 60300000
+          },
+          {
+            "ready": 4206,
+            "full": 4206,
+            "heap": 50400000
+          }
+        ]
+      },
+      "standard": {
+        "firstViewMs": 1513,
+        "finalQualityMs": 2000,
+        "jsHeapBytes": 18200000,
+        "samples": [
+          {
+            "ready": 1554,
+            "full": 2093,
+            "heap": 18200000
+          },
+          {
+            "ready": 1513,
+            "full": 1982,
+            "heap": 18200000
+          },
+          {
+            "ready": 1485,
+            "full": 2000,
+            "heap": 18200000
+          }
+        ]
+      },
+      "high": {
+        "firstViewMs": 1558,
+        "finalQualityMs": 12959,
+        "jsHeapBytes": 44700000,
+        "samples": [
+          {
+            "ready": 1560,
+            "full": 12558,
+            "heap": 44700000
+          },
+          {
+            "ready": 1491,
+            "full": 13254,
+            "heap": 44700000
+          },
+          {
+            "ready": 1558,
+            "full": 12959,
+            "heap": 47400000
+          }
+        ]
+      }
+    }
+  }
+}

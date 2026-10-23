@@ -1,5 +1,17 @@
 # BD3D roadmap
 
+## Status (23 Oct 2026)
+
+| Phase                      | State                         | Notes                                                                                                                                                                                                         |
+| -------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1 Foundation               | Done                          | Schema validation, modular viewer, unit tests, CI.                                                                                                                                                            |
+| 2 Assets and performance   | Done, with one open item      | Compressed derivatives, progressive and device-aware loading, preloading, disposal. Open: full-resolution upload stall in software WebGL; physical-device measurements. See [PERFORMANCE.md](PERFORMANCE.md). |
+| 3 Viewer and design system | Done                          | Single CSS system, PBR lighting, batched region states, views, shortcuts.                                                                                                                                     |
+| 4 Research tools           | Done within the data's limits | Raking light (form, not signs), vocabulary linking, deep links, collection search. Measurement and English word alignment wait for data.                                                                      |
+| 5 Publication              | Ready to deploy               | Documentation, screenshots and case study done. Deployment and the demo recording remain.                                                                                                                     |
+
+All work is on `redesign/foundation`; nothing is merged into `main`.
+
 Each phase lands on its own branch and is reviewed before the next merges. Nothing merges into `main` without approval. Findings referenced here are in [AUDIT.md](AUDIT.md).
 
 ## Phase 1 — Foundation (this branch: `redesign/foundation`)

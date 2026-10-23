@@ -9,26 +9,35 @@ npm ci
 npm run dev
 ```
 
-Open http://localhost:3000. The six exhibits and research page do not require environment variables or a database. Existing Supabase helpers and earlier prototype components remain in the repository; the museum routes use checked-in source snapshots.
+Open http://localhost:3000. The six exhibits and research page do not require environment variables or a database; the museum routes use checked-in source snapshots.
+
+### Checks
 
 ```sh
-npm run lint
-npm run typecheck
+npm run check          # format, lint, types, unit tests
+npm run verify:data    # asset sizes and SHA-256 against the import manifest
 npm run build
-npm run start -- --port 3100
-PLAYWRIGHT_BASE_URL=http://127.0.0.1:3100 npx playwright test
-node scripts/verify-import.mjs
+npm run start -- --port 3101
+npm run test:e2e       # Playwright, expects the server on :3101
 ```
 
-Browser tests use installed Google Chrome (`channel: 'chrome'`). Reports and screenshots are written to ignored `playwright-report/` and `test-results/` directories. Test failures must be investigated before release.
+Browser tests use installed Google Chrome by default. Without Chrome, or on a machine without a GPU (as in CI), use bundled Chromium with software WebGL and a longer readiness timeout:
+
+```sh
+npx playwright install chromium
+PLAYWRIGHT_CHANNEL= PLAYWRIGHT_SOFTWARE_GL=1 PLAYWRIGHT_EXPECT_TIMEOUT=45000 npm run test:e2e
+```
+
+Reports and screenshots are written to the ignored `playwright-report/` and `test-results/` directories. CI runs every check on each push (`.github/workflows/ci.yml`).
 
 ## Architecture
 
-- Next.js 16 / React 19 / TypeScript; statically generated exhibit pages and server-side annotation loading.
+- Next.js 16 / React 19 / TypeScript; statically generated exhibit pages. Edition data is validated against a schema and link checks at build time.
 - React Three Fiber / Three.js / Drei; OBJ + MTL + original textures loaded only for the opened exhibit, with on-demand rendering.
-- Source surface polygons connect to transcriptions, transliterations, translations, interpretation, and vocabulary entries. Camera and polygon transforms share the model’s source orientation and normalization.
-- Motion and CSS provide restrained transitions, with hydration-safe reduced-motion handling.
-- Responsive Next Image photography and self-hosted Geist fonts; server-rendered research/provenance content.
+- Source surface polygons connect to transcriptions, transliterations, translations, interpretation and vocabulary entries. One display transform is shared by the mesh and the region coordinates.
+- Scene math (orientation, hit testing, camera poses) and annotation logic are pure, unit-tested modules in `lib/`; components in `app/components/viewer` and `app/components/exhibit` compose them.
+
+Details: [architecture](docs/ARCHITECTURE.md) · [audit and baseline](docs/AUDIT.md) · [roadmap](docs/ROADMAP.md).
 
 ## Source data and editorial limits
 

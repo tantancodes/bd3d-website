@@ -86,12 +86,19 @@ export async function loadTexture(
   url: string,
   signal: AbortSignal,
   onBytes: ByteCounter,
+  anisotropy = 1,
 ): Promise<Texture> {
   const buffer = await fetchBytes(url, signal, onBytes);
   const type = url.endsWith('.webp') ? 'image/webp' : 'image/jpeg';
   let image: ImageBitmap;
   try {
-    image = await createImageBitmap(new Blob([buffer], { type }));
+    // Match the upload state three.js uses for sRGB textures (no colour-space conversion,
+    // no premultiplication); a mismatch makes the browser re-decode during upload.
+    // The source photographs carry no ICC profiles, so pixels are unchanged.
+    image = await createImageBitmap(new Blob([buffer], { type }), {
+      colorSpaceConversion: 'none',
+      premultiplyAlpha: 'none',
+    });
   } catch {
     throw new AssetLoadError(url, 'Could not decode texture');
   }
@@ -100,6 +107,9 @@ export async function loadTexture(
   texture.colorSpace = SRGBColorSpace;
   texture.minFilter = LinearMipmapLinearFilter;
   texture.generateMipmaps = true;
+  // Set before the first upload; three.js clamps it to the GPU's maximum. Changing it later
+  // would require re-uploading the whole texture.
+  texture.anisotropy = anisotropy;
   texture.needsUpdate = true;
   return texture;
 }

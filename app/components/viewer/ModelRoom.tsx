@@ -1,7 +1,7 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { NeutralToneMapping, PCFShadowMap } from 'three';
+import { NeutralToneMapping, PCFShadowMap, type Texture, type WebGLRenderer } from 'three';
 import type { DisplayModelAssets, TextureTier } from '@/lib/data/display-assets';
 import { CAMERA_FOV, HOME_POSITION } from '@/lib/scene/camera';
 import { PREVIEW_TIER } from '@/lib/scene/quality';
@@ -72,7 +72,15 @@ export default function ModelRoom({
   ...scene
 }: Props) {
   const [attempt, setAttempt] = useState(0);
-  const model = useCoffinModel(assets, targetTier ?? PREVIEW_TIER, attempt);
+  const renderer = useRef<WebGLRenderer | null>(null);
+  const prepare = useCallback((texture: Texture) => renderer.current?.initTexture(texture), []);
+  const model = useCoffinModel(
+    assets,
+    targetTier ?? PREVIEW_TIER,
+    attempt,
+    scene.anisotropy,
+    prepare,
+  );
   const ready = model.phase === 'ready';
   const tier = ready ? model.tier : null;
 
@@ -97,6 +105,7 @@ export default function ModelRoom({
           powerPreference: 'high-performance',
         }}
         onCreated={({ gl }) => {
+          renderer.current = gl;
           gl.domElement.setAttribute('role', 'img');
           gl.domElement.setAttribute(
             'aria-label',

@@ -34,10 +34,11 @@ async function loadTier(
   tier: TextureTier,
   signal: AbortSignal,
   onBytes: (n: number) => void,
+  anisotropy: number,
 ) {
   const entries = await Promise.all(
     [...textureUrls(assets, tier)].map(
-      async ([name, url]) => [name, await loadTexture(url, signal, onBytes)] as const,
+      async ([name, url]) => [name, await loadTexture(url, signal, onBytes, anisotropy)] as const,
     ),
   );
   return new Map<string, Texture>(entries);
@@ -52,6 +53,9 @@ export function useCoffinModel(
   assets: DisplayModelAssets,
   targetTier: TextureTier,
   attempt: number,
+  anisotropy: number,
+  /** Uploads a texture to the GPU ahead of use (renderer.initTexture), if available. */
+  prepare?: (texture: Texture) => void,
 ): ModelState {
   const initial = (): ModelState => ({
     phase: 'loading',
@@ -97,7 +101,8 @@ export function useCoffinModel(
     let object: Group | null = null;
     Promise.all([
       loadGeometry(assets, controller.signal, onBytes),
-      loadTier(assets, PREVIEW_TIER, controller.signal, onBytes),
+      // Preview textures are small and short-lived; modest filtering is enough.
+      loadTier(assets, PREVIEW_TIER, controller.signal, onBytes, 4),
     ])
       .then(([group, textures]) => {
         settled = true;
@@ -152,12 +157,28 @@ export function useCoffinModel(
     queueMicrotask(() =>
       update({ upgrade: { loaded: 0, total, tier: targetTier }, upgradeFailed: false }),
     );
-    loadTier(assets, targetTier, controller.signal, (n) => {
-      loaded += n;
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => update({ upgrade: { loaded, total, tier: targetTier } }));
-    })
-      .then((textures) => {
+    loadTier(
+      assets,
+      targetTier,
+      controller.signal,
+      (n) => {
+        loaded += n;
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() =>
+          update({ upgrade: { loaded, total, tier: targetTier } }),
+        );
+      },
+      anisotropy,
+    )
+      .then(async (textures) => {
+        // Upload one texture per frame before swapping, so large uploads never block the
+        // page for the whole tier at once.
+        if (prepare)
+          for (const texture of textures.values()) {
+            if (controller.signal.aborted) break;
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+            prepare(texture);
+          }
         if (controller.signal.aborted || objectRef.current !== object) {
           textures.forEach((t) => t.dispose());
           return;
@@ -180,7 +201,7 @@ export function useCoffinModel(
       controller.abort();
       cancelAnimationFrame(frame);
     };
-  }, [assets, ready, targetTier, setState]);
+  }, [assets, ready, targetTier, setState, anisotropy, prepare]);
 
   return state;
 }

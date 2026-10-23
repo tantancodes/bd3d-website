@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { preload } from 'react-dom';
 import { collection, getCoffin } from '@/lib/collection';
 import { getCoffinData } from '@/lib/data/load';
 import { displayAssets } from '@/lib/data/display-assets';
+import { PREVIEW_TIER } from '@/lib/scene/quality';
 import Exhibit from '@/app/components/exhibit/Exhibit';
 
 export function generateStaticParams() {
@@ -34,5 +36,11 @@ export default async function ExhibitPage({ params }: { params: Promise<{ slug: 
   const data = await getCoffinData(slug);
   const assets = displayAssets(slug);
   if (!coffin || !data || !assets) notFound();
+  // Start the first-view downloads while the viewer's JavaScript is still loading.
+  // `fetch()` in the loader reuses these responses (same URL, mode and credentials).
+  preload(assets.geometry.url, { as: 'fetch', crossOrigin: 'anonymous' });
+  for (const material of assets.materials)
+    if (material.texture)
+      preload(material.texture.tiers[PREVIEW_TIER].url, { as: 'fetch', crossOrigin: 'anonymous' });
   return <Exhibit key={slug} coffin={coffin} data={data} assets={assets} />;
 }

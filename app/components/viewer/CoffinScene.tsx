@@ -1,8 +1,8 @@
 'use client';
-import { useEffect, useMemo, useRef } from 'react';
+import { memo, useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import { ContactShadows, Html, OrbitControls } from '@react-three/drei';
-import { Box3, Sphere, Vector2, type Group, type Mesh, type MeshStandardMaterial } from 'three';
+import { Box3, Sphere, Vector2, type Group, type Mesh } from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
 import type { CoffinData, Region } from '@/lib/data/schema';
 import { prepareDisplayModel } from '@/lib/scene/orientation';
@@ -27,6 +27,7 @@ export type SceneProps = {
   command: CameraCommand;
   reduced: boolean;
   lighting: LightingMode;
+  /** Anisotropic filtering requested for new textures (applied by the loader). */
   anisotropy: number;
   shadows: boolean;
   onSelect: (regionId: string) => void;
@@ -36,7 +37,7 @@ export type SceneProps = {
 /** Pointer travel (px) beyond which a click is treated as the end of a drag. */
 const CLICK_TOLERANCE = 5;
 
-export default function CoffinScene({
+function CoffinScene({
   object,
   version,
   data,
@@ -49,7 +50,6 @@ export default function CoffinScene({
   command,
   reduced,
   lighting,
-  anisotropy,
   shadows,
   onSelect,
   onHover,
@@ -61,23 +61,17 @@ export default function CoffinScene({
     return { floor: box.min.y, radius: box.getBoundingSphere(new Sphere()).radius };
   }, [display]);
 
-  // Texture filtering and shadow flags, re-applied when textures change tier.
+  // Shadow flags. Texture filtering is set when textures are created (see model-assets),
+  // because changing it afterwards would re-upload every texture to the GPU.
   useEffect(() => {
-    const max = gl.capabilities.getMaxAnisotropy();
     display.scene.traverse((child) => {
       const mesh = child as Mesh;
       if (!mesh.isMesh) return;
       mesh.castShadow = shadows;
       mesh.receiveShadow = shadows;
-      for (const material of [mesh.material].flat() as MeshStandardMaterial[]) {
-        if (material.map) {
-          material.map.anisotropy = Math.min(anisotropy, max);
-          material.map.needsUpdate = true;
-        }
-      }
     });
     invalidate();
-  }, [display, version, anisotropy, shadows, gl, invalidate]);
+  }, [display, version, shadows, invalidate]);
 
   const controls = useRef<OrbitControlsImpl>(null);
   const focus = data.areas.find((region) => region.id === states.selected);
@@ -168,7 +162,15 @@ export default function CoffinScene({
       gl.info.autoReset = true;
     };
   }, [gl]);
+  // Marks when the first frame containing the model has been drawn (for benchmarks).
+  const firstFrame = useRef(false);
   useFrame(({ gl: renderer }) => {
+    if (!firstFrame.current) {
+      firstFrame.current = true;
+      requestAnimationFrame(() => {
+        renderer.domElement.dataset.firstFrame = String(Math.round(performance.now()));
+      });
+    }
     renderer.domElement.dataset.drawCalls = String(renderer.info.render.calls);
     renderer.domElement.dataset.triangles = String(renderer.info.render.triangles);
     renderer.domElement.dataset.textures = String(renderer.info.memory.textures);
@@ -221,3 +223,9 @@ export default function CoffinScene({
     </>
   );
 }
+
+/**
+ * Memoized: the loader re-renders its parent on every progress tick, and re-rendering the
+ * scene would re-apply props and request a new frame (including shadow passes) each time.
+ */
+export default memo(CoffinScene);

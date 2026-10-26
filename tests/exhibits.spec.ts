@@ -2,6 +2,11 @@ import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { surfaceTarget } from './surface-points';
 
+// The first-visit intro is covered by its own test; elsewhere start as a returning visitor.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => sessionStorage.setItem('bd3d.intro', '1'));
+});
+
 const HOME = '0.0000,0.0000,8.2000';
 const slugs = ['psamtikseneb', 'irethoreru', 'iwefaa2', 'anonymous1', 'amenirdis', 'psamtik'];
 for (const slug of slugs) {

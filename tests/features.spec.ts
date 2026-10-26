@@ -1,6 +1,11 @@
 import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+// The first-visit intro is covered by its own test; elsewhere start as a returning visitor.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => sessionStorage.setItem('bd3d.intro', '1'));
+});
+
 const HOME = '0.0000,0.0000,8.2000';
 
 async function openExhibit(page: Page, path: string) {

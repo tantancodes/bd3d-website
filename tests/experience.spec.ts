@@ -1,5 +1,11 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+
+// The first-visit intro is covered by its own test; elsewhere start as a returning visitor.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => sessionStorage.setItem('bd3d.intro', '1'));
+});
+
 const slugs = ['psamtikseneb', 'irethoreru', 'iwefaa2', 'anonymous1', 'amenirdis', 'psamtik'];
 async function noOverflow(page: import('@playwright/test').Page) {
   expect(
@@ -131,7 +137,12 @@ test('client navigation keeps each exhibit state isolated', async ({ page }) => 
 test('desktop accessibility and tablet exhibit layout', async ({ page }) => {
   for (const path of ['/', '/research', '/exhibits/psamtikseneb']) {
     await page.goto(path);
-    if (path === '/') await expect(page.locator('#hero-title')).toHaveCSS('opacity', '1');
+    if (path === '/') {
+      await expect(page.locator('#hero-title')).toHaveCSS('opacity', '1');
+      await page.waitForFunction(() =>
+        document.getAnimations().every((a) => a.playState === 'finished'),
+      );
+    }
     if (path.startsWith('/exhibits/')) {
       await expect(page.locator('.exhibit-intro')).toHaveCSS('opacity', '1');
       await expect(page.locator('.model-stage')).toHaveAttribute('data-model-ready', 'true');
@@ -145,4 +156,41 @@ test('desktop accessibility and tablet exhibit layout', async ({ page }) => {
   await expect(page.locator('.model-stage')).toHaveAttribute('data-model-ready', 'true');
   await noOverflow(page);
   await page.screenshot({ path: 'test-results/exhibit-tablet.png', fullPage: true });
+});
+
+test('first visit plays the intro once, can be skipped, and respects reduced motion', async ({
+  browser,
+}) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  await page.goto('/');
+  const root = page.locator('html');
+  await expect(root).toHaveClass(/intro-play/);
+  await expect(page.locator('.intro')).toBeVisible();
+  // The overlay never blocks the page, and the headline is in the accessibility tree throughout.
+  await expect(page.locator('.intro')).toHaveCSS('pointer-events', 'none');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    'Read ancient coffins where the words were written.',
+  );
+  await expect(root).toHaveClass(/intro-seen/, { timeout: 5000 });
+  await expect(page.locator('.intro')).toBeHidden();
+  await page.reload();
+  await expect(root).toHaveClass(/intro-seen/);
+  await expect(root).not.toHaveClass(/intro-play/);
+  await context.close();
+
+  const skipped = await browser.newPage();
+  await skipped.goto('/');
+  await expect(skipped.locator('html')).toHaveClass(/intro-play/);
+  await skipped.keyboard.press('Shift');
+  await expect(skipped.locator('html')).toHaveClass(/intro-seen/);
+  await expect(skipped.locator('.intro')).toBeHidden();
+  await skipped.close();
+
+  const reduced = await browser.newContext({ reducedMotion: 'reduce' });
+  const still = await reduced.newPage();
+  await still.goto('/');
+  await expect(still.locator('html')).toHaveClass(/intro-seen/);
+  await expect(still.locator('.intro')).toBeHidden();
+  await reduced.close();
 });

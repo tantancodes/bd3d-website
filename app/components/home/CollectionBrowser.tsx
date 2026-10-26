@@ -7,6 +7,36 @@ import type { Coffin } from '@/lib/collection';
 
 export type CollectionItem = Coffin & { entries: number; regions: number };
 
+const SIDES = ['top', 'right', 'bottom', 'left'] as const;
+
+/** The edge of the card the pointer crossed, from its angle to the card's centre. */
+function sideOf(event: React.PointerEvent<HTMLElement>) {
+  const box = event.currentTarget.getBoundingClientRect();
+  const x =
+    (event.clientX - box.left - box.width / 2) *
+    (box.width > box.height ? box.height / box.width : 1);
+  const y =
+    (event.clientY - box.top - box.height / 2) *
+    (box.height > box.width ? box.width / box.height : 1);
+  return SIDES[Math.round(Math.atan2(y, x) / (Math.PI / 2) + 5) % 4];
+}
+
+/** Direction-aware hover: the veil slides in from the edge the pointer entered by, and out the edge it left by. */
+function enter(event: React.PointerEvent<HTMLElement>) {
+  if (event.pointerType !== 'mouse') return;
+  const card = event.currentTarget;
+  card.dataset.from = sideOf(event);
+  delete card.dataset.hover;
+  void card.offsetWidth; // start the veil at the entry edge before it moves in
+  card.dataset.hover = '';
+}
+function leave(event: React.PointerEvent<HTMLElement>) {
+  if (event.pointerType !== 'mouse') return;
+  const card = event.currentTarget;
+  card.dataset.from = sideOf(event);
+  delete card.dataset.hover;
+}
+
 const FILTERS = ['All objects', 'Wood', 'Stone'] as const;
 type Filter = (typeof FILTERS)[number];
 
@@ -69,6 +99,8 @@ export default function CollectionBrowser({ items }: { items: CollectionItem[] }
                   href={`/exhibits/${c.slug}`}
                   prefetch={false}
                   aria-label={`${c.name}, ${c.museum}`}
+                  onPointerEnter={enter}
+                  onPointerLeave={leave}
                 >
                   <div className="exhibit-card__image">
                     <Image
@@ -77,6 +109,12 @@ export default function CollectionBrowser({ items }: { items: CollectionItem[] }
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 33vw"
                     />
+                    <div className="exhibit-card__veil" aria-hidden="true">
+                      <span className="mono">{c.regions} regions</span>
+                      <span className="exhibit-card__open">
+                        Open exhibit <ArrowUpRight size={16} />
+                      </span>
+                    </div>
                   </div>
                   <div className="exhibit-card__body">
                     <p className="exhibit-card__meta">
@@ -92,7 +130,6 @@ export default function CollectionBrowser({ items }: { items: CollectionItem[] }
                       {c.entries} entries · {c.regions} mapped regions
                     </p>
                   </div>
-                  <ArrowUpRight className="exhibit-card__arrow" size={18} aria-hidden="true" />
                 </Link>
               </li>
             );

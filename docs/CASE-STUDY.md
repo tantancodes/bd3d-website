@@ -32,7 +32,7 @@ A web application where you turn a coffin, click any outlined region to read wha
 
 **Picking that matches the scholarship.** Region selection reuses the source viewer's own projected-polygon rule rather than approximating it, so what you click is exactly what the editors drew. Hover uses the same rule without raycasting the 50,000-triangle meshes on every mouse move, and all outlines are drawn in at most four batched draw calls instead of one per region.
 
-**Testing.** 82 unit tests cover the data, the geometry math and the search and linking logic. 45 end-to-end tests drive every exhibit in a real browser: loading, failure and retry, clicking the model, camera controls, deep links, vocabulary links, raking light and accessibility scans. CI runs all of it on every push.
+**Testing.** 82 unit tests cover the data, the geometry math and the search and linking logic. 46 end-to-end tests drive every exhibit in a real browser: loading, failure and retry, clicking the model, camera controls, deep links, vocabulary links, raking light and accessibility scans. CI runs all of it on every push.
 
 ## Measured results
 

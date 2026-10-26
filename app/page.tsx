@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { collection } from '@/lib/collection';
@@ -6,6 +5,9 @@ import { getCoffinData } from '@/lib/data/load';
 import SiteHeader from './components/site/SiteHeader';
 import SiteFooter from './components/site/SiteFooter';
 import CollectionBrowser, { type CollectionItem } from './components/home/CollectionBrowser';
+import Emblem from './components/home/Emblem';
+import Intro from './components/home/Intro';
+import RevealText from './components/home/RevealText';
 
 export default async function Home() {
   const items: CollectionItem[] = await Promise.all(
@@ -16,74 +18,54 @@ export default async function Home() {
   );
   const entries = items.reduce((n, c) => n + c.entries, 0);
   const regions = items.reduce((n, c) => n + c.regions, 0);
-  const museums = new Set(items.map((c) => c.museum)).size;
   const featured = items[0];
 
   return (
     <>
+      <Intro />
       <a className="skip-link" href="#collection">
         Skip to collection
       </a>
       <SiteHeader />
       <main>
         <section className="hero" aria-labelledby="hero-title">
-          <div className="hero__copy">
-            <p className="eyebrow">UC Berkeley · The Book of the Dead in 3D</p>
-            <h1 id="hero-title">Read ancient Egyptian coffins where the words were written.</h1>
-            <p className="hero__lede">
-              Six coffins as photogrammetric models. Every annotated inscription is mapped to its
-              place on the surface, with hieroglyphs, transliteration and translation side by side.
-            </p>
-            <div className="hero__actions">
-              <Link
-                className="button button--primary button--large"
-                href={`/exhibits/${featured.slug}`}
-                prefetch={false}
-              >
-                Open {featured.name} <ArrowRight size={16} aria-hidden="true" />
-              </Link>
-              <Link className="button button--large" href="/search">
-                Search the inscriptions
-              </Link>
-            </div>
-            <dl className="stats">
-              <div>
-                <dt>Objects</dt>
-                <dd>{items.length}</dd>
-              </div>
-              <div>
-                <dt>Annotated entries</dt>
-                <dd>{entries}</dd>
-              </div>
-              <div>
-                <dt>Mapped regions</dt>
-                <dd>{regions}</dd>
-              </div>
-              <div>
-                <dt>Collections</dt>
-                <dd>{museums}</dd>
-              </div>
-            </dl>
+          <Emblem className="hero__emblem" title="BD3D" />
+          <h1 id="hero-title">
+            <RevealText text="Read ancient coffins where the words were written." />
+          </h1>
+          <p className="hero__lede hero__in">
+            Six Egyptian coffins in 3D. Select any inscription to read it in hieroglyphs,
+            transliteration and translation, on the surface where it was carved.
+          </p>
+          <div className="hero__actions hero__in">
+            <Link className="button button--primary button--large" href="#collection">
+              Enter the collection
+            </Link>
+            <Link className="text-link" href="/search">
+              Search the inscriptions <ArrowRight size={14} aria-hidden="true" />
+            </Link>
           </div>
           <Link
-            className="hero__figure"
+            className="hero__product hero__in"
             href={`/exhibits/${featured.slug}`}
             prefetch={false}
             aria-label={`Enter the ${featured.name} exhibit`}
           >
-            <Image
-              src={`/images/coffins/${featured.slug}.jpg`}
-              alt={`The coffin of ${featured.name}`}
-              fill
-              priority
-              sizes="(max-width: 900px) 100vw, 46vw"
-            />
-            <span className="hero__caption">
-              <span>{featured.name}</span>
-              <span className="mono">
-                {featured.museum} · {featured.accession}
-              </span>
-            </span>
+            <picture>
+              <source
+                media="(max-width: 640px)"
+                srcSet="/images/product/viewer-mobile.jpg"
+                width={640}
+                height={800}
+              />
+              <img
+                src="/images/product/viewer.jpg"
+                alt={`The BD3D viewer: the coffin of ${featured.name} with its central inscription selected`}
+                width={1440}
+                height={900}
+                fetchPriority="high"
+              />
+            </picture>
           </Link>
         </section>
 
@@ -93,11 +75,10 @@ export default async function Home() {
           aria-labelledby="collection-title"
         >
           <div className="section__heading">
-            <p className="eyebrow">The collection</p>
-            <h2 id="collection-title">Six objects in three collections</h2>
+            <h2 id="collection-title">Six coffins, three collections</h2>
             <p>
-              Each exhibit opens the model with its published annotation edition. Choose an object
-              to turn it, select an outlined region, and read what is written there.
+              {entries} entries mapped to {regions} regions on the surface. Choose an object, turn
+              it, and select an outlined region to read what is written there.
             </p>
           </div>
           <CollectionBrowser items={items} />

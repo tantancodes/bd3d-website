@@ -31,7 +31,7 @@ Read ancient Egyptian coffins where the words were written. BD3D is a research v
 | **Batched overlays**                  | Region outlines in at most four draw calls (one per state) instead of up to 265.                                                                                                                                                                         |
 | **Faithful colour**                   | Khronos PBR Neutral tone mapping, sRGB textures, image-based ambient light, viewer-relative key and fill lights.                                                                                                                                         |
 | **Validated research data**           | zod schema and two-way link checks on every edition at build time.                                                                                                                                                                                       |
-| **Tests**                             | 82 unit tests, 45 Playwright end-to-end tests with axe accessibility scans, all in CI.                                                                                                                                                                   |
+| **Tests**                             | 82 unit tests, 46 Playwright end-to-end tests with axe accessibility scans, all in CI.                                                                                                                                                                   |
 
 ### Measured results
 

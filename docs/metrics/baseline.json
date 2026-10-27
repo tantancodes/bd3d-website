@@ -1,0 +1,266 @@
+{
+  "measuredAt": "2026-10-23T07:27:43.060Z",
+  "environment": "headless Chromium, SwiftShader (CPU) WebGL, localhost, cache disabled",
+  "routes": [
+    {
+      "path": "/",
+      "loadMs": 354,
+      "modelReadyMs": null,
+      "totalBytes": 594886,
+      "byType": {
+        "Document": {
+          "requests": 1,
+          "bytes": 5583
+        },
+        "Stylesheet": {
+          "requests": 1,
+          "bytes": 16933
+        },
+        "Image": {
+          "requests": 7,
+          "bytes": 224321
+        },
+        "Font": {
+          "requests": 2,
+          "bytes": 141622
+        },
+        "Script": {
+          "requests": 10,
+          "bytes": 197939
+        },
+        "Fetch": {
+          "requests": 4,
+          "bytes": 8488
+        }
+      },
+      "jsHeapBytes": 10000000
+    },
+    {
+      "path": "/research",
+      "loadMs": 232,
+      "modelReadyMs": null,
+      "totalBytes": 372079,
+      "byType": {
+        "Document": {
+          "requests": 1,
+          "bytes": 7097
+        },
+        "Font": {
+          "requests": 2,
+          "bytes": 141622
+        },
+        "Stylesheet": {
+          "requests": 1,
+          "bytes": 16933
+        },
+        "Script": {
+          "requests": 10,
+          "bytes": 197939
+        },
+        "Fetch": {
+          "requests": 4,
+          "bytes": 8488
+        }
+      },
+      "jsHeapBytes": 10000000
+    },
+    {
+      "path": "/exhibits/psamtikseneb",
+      "loadMs": 258,
+      "modelReadyMs": 8693,
+      "totalBytes": 21231789,
+      "byType": {
+        "Document": {
+          "requests": 1,
+          "bytes": 19286
+        },
+        "Font": {
+          "requests": 4,
+          "bytes": 466469
+        },
+        "Stylesheet": {
+          "requests": 1,
+          "bytes": 16933
+        },
+        "Script": {
+          "requests": 12,
+          "bytes": 461109
+        },
+        "Fetch": {
+          "requests": 4,
+          "bytes": 3419493
+        },
+        "Image": {
+          "requests": 4,
+          "bytes": 16848499
+        }
+      },
+      "jsHeapBytes": 18200000
+    },
+    {
+      "path": "/exhibits/irethoreru",
+      "loadMs": 269,
+      "modelReadyMs": 8227,
+      "totalBytes": 16168432,
+      "byType": {
+        "Stylesheet": {
+          "requests": 1,
+          "bytes": 16933
+        },
+        "Font": {
+          "requests": 4,
+          "bytes": 466469
+        },
+        "Document": {
+          "requests": 1,
+          "bytes": 39742
+        },
+        "Script": {
+          "requests": 12,
+          "bytes": 461109
+        },
+        "Fetch": {
+          "requests": 4,
+          "bytes": 3363151
+        },
+        "Image": {
+          "requests": 4,
+          "bytes": 11821028
+        }
+      },
+      "jsHeapBytes": 42100000
+    },
+    {
+      "path": "/exhibits/iwefaa2",
+      "loadMs": 281,
+      "modelReadyMs": 5738,
+      "totalBytes": 14850899,
+      "byType": {
+        "Font": {
+          "requests": 4,
+          "bytes": 466469
+        },
+        "Document": {
+          "requests": 1,
+          "bytes": 10279
+        },
+        "Stylesheet": {
+          "requests": 1,
+          "bytes": 16933
+        },
+        "Script": {
+          "requests": 12,
+          "bytes": 461109
+        },
+        "Fetch": {
+          "requests": 4,
+          "bytes": 3128797
+        },
+        "Image": {
+          "requests": 4,
+          "bytes": 10767312
+        }
+      },
+      "jsHeapBytes": 72200000
+    },
+    {
+      "path": "/exhibits/anonymous1",
+      "loadMs": 231,
+      "modelReadyMs": 2828,
+      "totalBytes": 4986438,
+      "byType": {
+        "Document": {
+          "requests": 1,
+          "bytes": 10499
+        },
+        "Stylesheet": {
+          "requests": 1,
+          "bytes": 16933
+        },
+        "Font": {
+          "requests": 4,
+          "bytes": 466469
+        },
+        "Script": {
+          "requests": 12,
+          "bytes": 461109
+        },
+        "Fetch": {
+          "requests": 4,
+          "bytes": 2535276
+        },
+        "Image": {
+          "requests": 1,
+          "bytes": 1496152
+        }
+      },
+      "jsHeapBytes": 44700000
+    },
+    {
+      "path": "/exhibits/amenirdis",
+      "loadMs": 286,
+      "modelReadyMs": 7070,
+      "totalBytes": 9035638,
+      "byType": {
+        "Font": {
+          "requests": 3,
+          "bytes": 150007
+        },
+        "Stylesheet": {
+          "requests": 1,
+          "bytes": 16933
+        },
+        "Document": {
+          "requests": 1,
+          "bytes": 6046
+        },
+        "Script": {
+          "requests": 12,
+          "bytes": 461109
+        },
+        "Fetch": {
+          "requests": 4,
+          "bytes": 2006816
+        },
+        "Image": {
+          "requests": 4,
+          "bytes": 6394727
+        }
+      },
+      "jsHeapBytes": 26000000
+    },
+    {
+      "path": "/exhibits/psamtik",
+      "loadMs": 255,
+      "modelReadyMs": 7659,
+      "totalBytes": 19921422,
+      "byType": {
+        "Document": {
+          "requests": 1,
+          "bytes": 32089
+        },
+        "Font": {
+          "requests": 4,
+          "bytes": 466469
+        },
+        "Script": {
+          "requests": 12,
+          "bytes": 461109
+        },
+        "Stylesheet": {
+          "requests": 1,
+          "bytes": 16933
+        },
+        "Fetch": {
+          "requests": 4,
+          "bytes": 3285265
+        },
+        "Image": {
+          "requests": 4,
+          "bytes": 15659557
+        }
+      },
+      "jsHeapBytes": 39600000
+    }
+  ]
+}

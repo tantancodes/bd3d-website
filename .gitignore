@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Reproducible import caches and browser test reports
+/data/sources/
+/playwright-report/
+/test-results/
